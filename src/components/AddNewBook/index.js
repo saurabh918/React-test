@@ -6,6 +6,10 @@ const AddNewBook = ({editBook,setEditBook}) => {
   const categories = useSelector(state => state.bookSlice.categories) // fetch categories
   const authors = useSelector(state => state.bookSlice.authors) // fetch authors
   const totalBooks = useSelector(state => state.bookSlice.bookData) // all books data
+  const [displayAddCategory, setDisplayAddCategory] = useState(false) // to show or hide add category popup
+  const [displayAddAuthor,setDisplayAddAuthor] = useState(false) // to show or hide add author popup
+  const [newCategory,setNewCategory] = useState('')
+  const [newAuthor,setNewAuthor] = useState('')
   const dispatch = useDispatch()
 
   const [title, setTitle] = useState('')
@@ -51,20 +55,42 @@ const AddNewBook = ({editBook,setEditBook}) => {
       setAuthor('')
   }
 
+  const handleCategoryChange = (e) => {
+    setNewCategory(e.target.value)
+  }
+
+  const handleAuthorChange = (e) => {
+    setNewAuthor(e.target.value)
+  }
+
   const handleCategory = () => {  // add new category
-    if(category && !(categories.includes(category))) {
-      dispatch(addCategory(category))
+    if(newCategory && !(categories.includes(newCategory))) {
+      dispatch(addCategory(newCategory))
     }
+    setDisplayAddCategory(false)
+    setCategory(newCategory)
+    setNewCategory('')
   }
 
   const handleAuthor = () => { // add new author
-    if(author && !(authors.includes(author))) {
-      dispatch(addAuthor(author))
+    if(newAuthor && !(authors.includes(newAuthor))) {
+      dispatch(addAuthor(newAuthor))
     }
+    setDisplayAddAuthor(false)
+    setAuthor(newAuthor)
+    setNewAuthor('')
   }
 
   const handleDelete = () => {
     dispatch(deleteBook(editBook.id))
+  }
+
+  const showCategory = () => {
+    setDisplayAddCategory(true)
+  }
+
+  const showAuthor = () => {
+    setDisplayAddAuthor(true)
   }
 
   useEffect(() => {
@@ -98,6 +124,17 @@ const AddNewBook = ({editBook,setEditBook}) => {
         }
         </select>
 
+        <button type='button' onClick={() => showCategory()}>Add Category</button>
+        {
+          displayAddCategory && (
+            <div className='add-category'>
+              <input type='text' value={newCategory} onChange={(e) => handleCategoryChange(e)} />
+              <button onClick={() => handleCategory()}>Add</button>
+            </div>
+          )
+        }
+
+
         <label htmlFor='author'>Author:</label>
         <select id="author" value={author} onChange={e => setAuthor(e.target.value)}>
         <option value=''>{author ? author : "Select Author"}</option>
@@ -110,7 +147,17 @@ const AddNewBook = ({editBook,setEditBook}) => {
         }
         </select>
 
-        <button onClick={(e) => handleAddBook(e)}>{editBook ? "Edit" : "Add"}</button>
+        <button type='button' onClick={() => showAuthor()}>Add Author</button>
+        {
+          displayAddAuthor && (
+            <div className='add-author'>
+              <input type='text' value={newAuthor} onChange={(e) => handleAuthorChange(e)} />
+              <button onClick={() => handleAuthor()}>Add</button>
+            </div>
+          )
+        }
+
+        <button type='button' onClick={(e) => handleAddBook(e)}>{editBook ? "Edit" : "Add"}</button>
 
         { editBook ? (<button onClick={(e) => handleDelete(e)}>Delete</button>) : ''}
 
