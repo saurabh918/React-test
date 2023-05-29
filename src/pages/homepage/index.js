@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { HomeStyle } from './styled'
 import WrapperComponent from '../../components/wrapper'
-import { decrement, increment } from '../../features/bookSlice'
+import { addBook, addCategory } from '../../features/bookSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import BookContent from '../../components/bookContents'
@@ -16,6 +16,7 @@ const Home = () => {
   const currentPage = useSelector(state => state.bookSlice.currentPage); // current page number
   const itemsPerPage = useSelector(state => state.bookSlice.itemsPerPage); // items per page
   const totalPages = Math.ceil(totalBooks.length / itemsPerPage); // calculate total pages
+  
   const [searchKeyword, setSearchKeyword] = useState(''); // search value
 
   const [sortColumn, setSortColumn] = useState(null); // column which is referred for sorting
