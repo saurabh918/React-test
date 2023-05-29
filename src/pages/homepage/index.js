@@ -8,16 +8,18 @@ import BookContent from '../../components/bookContents'
 import BookDataHeading from '../../components/bookDataTitles'
 import { setPage } from '../../features/bookSlice'
 import { selectData } from '../../selectors'
+import AddNewBook from '../../components/AddNewBook'
 const Home = () => {
   const dispatch = useDispatch()
   const books = useSelector(selectData) // get data for the current page
-  const totalBooks = useSelector(state => state.bookSlice.bookData)
-  const currentPage = useSelector(state => state.bookSlice.currentPage);
-  const itemsPerPage = useSelector(state => state.bookSlice.itemsPerPage);
-  const totalPages = Math.ceil(totalBooks.length / itemsPerPage);
+  const totalBooks = useSelector(state => state.bookSlice.bookData) // all books data
+  const currentPage = useSelector(state => state.bookSlice.currentPage); // current page number
+  const itemsPerPage = useSelector(state => state.bookSlice.itemsPerPage); // items per page
+  const totalPages = Math.ceil(totalBooks.length / itemsPerPage); // calculate total pages
+  const [searchKeyword, setSearchKeyword] = useState(''); // search value
 
-  const [sortColumn, setSortColumn] = useState(null);
-  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortColumn, setSortColumn] = useState(null); // column which is referred for sorting
+  const [sortOrder, setSortOrder] = useState('asc'); // decide ascending or descending
 
   const theme = {
     primaryColor: "blue",
@@ -41,15 +43,8 @@ const Home = () => {
     } else if (sortColumn === 'category') {
       return sortOrder === 'asc' ? a.category.localeCompare(b.category) : b.category.localeCompare(a.category);
     }else if (sortColumn === 'publish_date') {
-      console.log('Before sorting:');
-      console.log(a.published_date, b.published_date);
-
       const dateA = new Date(a.publish_date);
       const dateB = new Date(b.publish_date);
-
-      console.log('After sorting:');
-      console.log(dateA, dateB);
-
       return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
     } else if (sortColumn === 'author') {
       return sortOrder === 'asc' ? a.category.localeCompare(b.author) : b.author.localeCompare(a.author);
@@ -74,26 +69,50 @@ const Home = () => {
     dispatch(setPage(page));
   };
 
+  const handleSearch = (event) => { // set search value
+    setSearchKeyword(event.target.value);
+  };
+
+  const filteredData = sortedData.filter((item) => { // get data on the basis of searched value
+    const { id, title, category, publish_date, author } = item;
+    const lowerCaseKeyword = searchKeyword.toLowerCase();
+  
+    return (
+      id.toString().includes(lowerCaseKeyword) ||
+      title.toLowerCase().includes(lowerCaseKeyword) ||
+      category.toLowerCase().includes(lowerCaseKeyword) ||
+      publish_date.toLowerCase().includes(lowerCaseKeyword) ||
+      author.toLowerCase().includes(lowerCaseKeyword)
+    );
+  });
+
   return (
     <ThemeProvider theme={theme}>
     <HomeStyle>
       <WrapperComponent>
         <h1>Books Management System</h1>
+        <input type='text' value={searchKeyword} onChange={handleSearch}></input>
         <table>
           <BookDataHeading handleSort={handleSort} />
           <tbody>
-              {sortedData.map((book,i) => (
+              { searchKeyword === '' ?
+              (sortedData.map((book,i) => (
                 <BookContent book={book} key={i} />
-              ))}
+              ))) :
+              (filteredData.map((book,i) => (
+                <BookContent book={book} key={i} />
+              )))
+            }
           </tbody>
         </table>
-        <div>
+        <div className='page-controls'>
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</button>
         {Array.from({ length: totalPages }, (_, i) => (
           <button key={i} onClick={() => handlePageClick(i + 1)} disabled={currentPage === i + 1}>{i + 1}</button>
         ))}
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
       </div>
+      <AddNewBook />
       </WrapperComponent>
     </HomeStyle>
     </ThemeProvider>

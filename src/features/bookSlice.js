@@ -21,7 +21,9 @@ const initialState = {
 
   ],
   currentPage: 1,
-  itemsPerPage: 5
+  itemsPerPage: 5,
+  categories: ["cat","wat","kat"],
+  authors: ["author"]
 }
 
 export const bookSlice = createSlice({
