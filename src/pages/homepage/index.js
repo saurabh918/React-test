@@ -21,6 +21,7 @@ const Home = () => {
 
   const [sortColumn, setSortColumn] = useState(null); // column which is referred for sorting
   const [sortOrder, setSortOrder] = useState('asc'); // decide ascending or descending
+  const [editBook, setEditBook] = useState(null); // targeted book to edit
 
   const theme = {
     primaryColor: "blue",
@@ -74,6 +75,13 @@ const Home = () => {
     setSearchKeyword(event.target.value);
   };
 
+  const handleEdit = (id) => {
+    const bookToEdit = totalBooks.find(book => book.id === id)
+    if(bookToEdit) {
+      setEditBook(bookToEdit)
+    }
+  }
+
   const filteredData = sortedData.filter((item) => { // get data on the basis of searched value
     const { id, title, category, publish_date, author } = item;
     const lowerCaseKeyword = searchKeyword.toLowerCase();
@@ -92,16 +100,16 @@ const Home = () => {
     <HomeStyle>
       <WrapperComponent>
         <h1>Books Management System</h1>
-        <input type='text' value={searchKeyword} onChange={handleSearch}></input>
+        <input type='text' value={searchKeyword} onChange={handleSearch} placeholder='search'></input>
         <table>
           <BookDataHeading handleSort={handleSort} />
           <tbody>
               { searchKeyword === '' ?
               (sortedData.map((book,i) => (
-                <BookContent book={book} key={i} />
+                <BookContent book={book} key={i} handleEdit={handleEdit} />
               ))) :
               (filteredData.map((book,i) => (
-                <BookContent book={book} key={i} />
+                <BookContent book={book} key={i} handleEdit={handleEdit} />
               )))
             }
           </tbody>
@@ -113,7 +121,7 @@ const Home = () => {
         ))}
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
       </div>
-      <AddNewBook />
+      <AddNewBook editBook={editBook} setEditBook={setEditBook} />
       </WrapperComponent>
     </HomeStyle>
     </ThemeProvider>

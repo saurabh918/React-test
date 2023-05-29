@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addAuthor, addBook, addCategory } from '../../features/bookSlice'
+import { addAuthor, addBook, addCategory, deleteBook, editBookInfo } from '../../features/bookSlice'
 
-const AddNewBook = () => {
+const AddNewBook = ({editBook,setEditBook}) => {
   const categories = useSelector(state => state.bookSlice.categories) // fetch categories
   const authors = useSelector(state => state.bookSlice.authors) // fetch authors
   const totalBooks = useSelector(state => state.bookSlice.bookData) // all books data
@@ -16,6 +16,22 @@ const AddNewBook = () => {
   const handleAddBook = (e) => {  // add new book 
     e.preventDefault()
     if(!title || !category || !publishedDate || !author) {
+      return;
+    }
+
+    if(editBook) {
+      dispatch(editBookInfo({id: editBook.id, title: title, category: category, publish_date: publishedDate, author: author}))
+      setTitle('')
+      setCategory('')
+      setPublishedDate('')
+      setAuthor('')
+      setEditBook(null)
+      return;
+    }
+
+    const checkTitle = totalBooks.find(book => book.title === title) 
+    if(checkTitle) {
+      alert("Found duplicate entry")
       return;
     }
 
@@ -47,6 +63,19 @@ const AddNewBook = () => {
     }
   }
 
+  const handleDelete = () => {
+    dispatch(deleteBook(editBook.id))
+  }
+
+  useEffect(() => {
+    if(editBook) {
+      setTitle(editBook.title)
+      setCategory(editBook.category)
+      setPublishedDate(editBook.publish_date)
+      setAuthor(editBook.author)
+    }
+  },[editBook])
+
   return (
     <div>
       <h2>Add New Book</h2>
@@ -59,7 +88,7 @@ const AddNewBook = () => {
 
         <label htmlFor='category'>Category:</label>
         <select id="category" value={category} onChange={e => setCategory(e.target.value)}>
-        <option value=''>Select Category</option>
+        <option value=''>{category ? category : "Select Category"}</option>
         {
           categories.map((cat,i) => (
             <option key={i} value={cat}>
@@ -71,7 +100,7 @@ const AddNewBook = () => {
 
         <label htmlFor='author'>Author:</label>
         <select id="author" value={author} onChange={e => setAuthor(e.target.value)}>
-        <option value=''>Select Author</option>
+        <option value=''>{author ? author : "Select Author"}</option>
         {
           categories.map((author,i) => (
             <option key={i} value={author}>
@@ -81,7 +110,9 @@ const AddNewBook = () => {
         }
         </select>
 
-        <button onClick={(e) => handleAddBook(e)}>Add Button</button>
+        <button onClick={(e) => handleAddBook(e)}>{editBook ? "Edit" : "Add"}</button>
+
+        { editBook ? (<button onClick={(e) => handleDelete(e)}>Delete</button>) : ''}
 
       </form>
     </div>
