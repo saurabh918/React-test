@@ -98,7 +98,7 @@ const initialState = {
       id: 14,
       title: "Book 14",
       category: "Science",
-      publish_date: "2016-15-30",
+      publish_date: "2016-01-30",
       author: "Emily Davis",
     },
     {
