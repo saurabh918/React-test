@@ -90,4 +90,8 @@ export const AddNewBookStyle = styled.div`  // styled component for add new book
       color: #ffffff;
     }
   }
+
+  p {
+    color: #ffffff;
+  }
 `;

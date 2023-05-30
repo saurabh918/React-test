@@ -276,6 +276,8 @@ const AddNewBook = ({ editBook, setEditBook }) => {
             )}
           </div>
         </form>
+        <p>Number of Books: {totalBooks.length}</p>
+        <p>Number of Authors: {authors.length}</p>
       </AddNewBookStyle>
     </ThemeProvider>
   );
