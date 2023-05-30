@@ -8,10 +8,22 @@ h1 {
   font-size: 50px;
   color: ${props => props.theme.primaryColor};
   font-weight: bold;
+  @media only screen and (max-width: 1024px) {
+    font-size: 40px;
+  }
+  @media only screen and (max-width: 767px) {
+    font-size: 25px;
+  }
+  @media only screen and (max-width: 576px) {
+    font-size: 22px;
+  }
 }
 
 .search-field {
   padding: 10px 20px;
+  @media only screen and (max-width: 576px) {
+    padding: 5px 10px;
+  }
 }
 
 table {
@@ -32,7 +44,7 @@ button {
 .row {
   display: flex;
   justify-content: space-between;
-  @media only screen and (max-width: 1311px) {
+  @media only screen and (max-width: 1068px) {
     flex-direction: column;
   }
 }
@@ -60,6 +72,9 @@ export const PageControls = styled.div`
     cursor: pointer;
     &:disabled {
       cursor: not-allowed;
+    }
+    &:hover {
+      background-color: #800080;
     }
   }
 

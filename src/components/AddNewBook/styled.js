@@ -73,6 +73,10 @@ export const AddNewBookStyle = styled.div`
     @media only screen and (max-width: 616px) {
       flex-basis: 100%;
     }
+
+    @media only screen and (min-width: 1069px) and (max-width: 1366px) {
+      flex-basis: 100%;
+    }
   }
 
   label {
@@ -80,15 +84,4 @@ export const AddNewBookStyle = styled.div`
   }
 `;
 
-export const AddSectionStyle = styled.div`
-  padding: 2% 2% 4%;;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 10px 10px;
-  background-color: #faebd7;
-  @media only screen and (max-width: 400px) {
-    padding: 2% 6% 8%;
-  }
-`
+

@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HomeStyle, PageControls } from './styled'
 import WrapperComponent from '../../components/wrapper'
-import { addBook, addCategory } from '../../features/bookSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import BookContent from '../../components/bookContents'
 import BookDataHeading from '../../components/bookDataTitles'
 import { setPage } from '../../features/bookSlice'
-import AddNewBook from '../../components/AddNewBook'
+import AddNewBook from '../../components/addNewBook'
 const Home = () => {
   const dispatch = useDispatch()
   const totalBooks = useSelector(state => state.bookSlice.bookData) // all books data
@@ -92,10 +91,10 @@ const Home = () => {
     }
   }
 
-  const filteredData = sortedData.filter((item) => { // get data on the basis of searched value
+  const filteredData = totalBooks.filter((item) => { // get data on the basis of searched value
     const { id, title, category, publish_date, author } = item;
     const lowerCaseKeyword = searchKeyword.toLowerCase();
-  
+    console.log(currentPage)
     return (
       id.toString().includes(lowerCaseKeyword) ||
       title.toLowerCase().includes(lowerCaseKeyword) ||
@@ -105,7 +104,14 @@ const Home = () => {
     );
   });
 
+  const filteredPages = Math.ceil(filteredData.length / itemsPerPage)
+  console.log(filteredPages )
+
   const filteredPageData = filteredData.slice(startIndex,endIndex)
+
+  useEffect(()=> {
+    dispatch(setPage(1))
+  },[searchKeyword,dispatch])
 
   return (
     <ThemeProvider theme={theme}>
@@ -130,7 +136,7 @@ const Home = () => {
         </table>
         <PageControls className='page-controls'>
         <button onClick={handlePreviousPage} disabled={currentPage === 1} className='slide-btn'>Previous</button>
-        {Array.from({ length: totalPages }, (_, i) => (
+        {Array.from({ length: filteredData ? filteredPages : totalPages }, (_, i) => (
           <button key={i} onClick={() => handlePageClick(i + 1)} disabled={currentPage === i + 1} className={ currentPage === i+1 ? "current-page" : ""} >{i + 1}</button>
         ))}
         <button onClick={handleNextPage} disabled={currentPage === totalPages} className='slide-btn'>Next</button>

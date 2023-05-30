@@ -17,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+    &.disable-scroll {
+    overflow: hidden;
+    pointer-events: none;
+    }
   }
 
   code {
