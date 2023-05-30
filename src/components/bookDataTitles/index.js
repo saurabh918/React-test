@@ -1,17 +1,18 @@
 import React from 'react'
+import { BookTitleStyling } from './styled'
 
-const BookDataHeading = ({handleSort}) => {
+const BookDataHeading = ({handleSort,getSortOrder}) => {
   return (
-    <thead>
+    <BookTitleStyling>
       <tr>
-        <th onClick={() => handleSort('id')}>ID</th>
-        <th onClick={() => handleSort('title')}>Title</th>
-        <th onClick={() => handleSort('category')}>Category</th>
-        <th onClick={() => handleSort('publish_date')}>Publish Date</th>
-        <th onClick={() => handleSort('author')}>Author</th>
+        <th title="sort by ID" onClick={() => handleSort('id')}>ID {getSortOrder('id')}</th>
+        <th title="sort by Title" onClick={() => handleSort('title')}>Title {getSortOrder('title')} </th>
+        <th title="sort by Category" onClick={() => handleSort('category')}>Category {getSortOrder('category')}</th>
+        <th title="sort by Publish Date" onClick={() => handleSort('publish_date')}>Publish Date {getSortOrder('publish_date')}</th>
+        <th title="sort by Author" onClick={() => handleSort('author')}>Author {getSortOrder('author')}</th>
         <th>Edit</th>
       </tr>
-    </thead>
+    </BookTitleStyling>
   )
 }
 

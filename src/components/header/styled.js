@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 
 export const HeaderStyle = styled.header`
-text-align: right;
+padding: 5px 0;
+background-color: #f5f5dc;
+text-align: left;
 `

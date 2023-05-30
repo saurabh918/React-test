@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { HomeStyle } from './styled'
+import { HomeStyle, PageControls } from './styled'
 import WrapperComponent from '../../components/wrapper'
 import { addBook, addCategory } from '../../features/bookSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,15 +7,17 @@ import { ThemeProvider } from 'styled-components'
 import BookContent from '../../components/bookContents'
 import BookDataHeading from '../../components/bookDataTitles'
 import { setPage } from '../../features/bookSlice'
-import { selectData } from '../../selectors'
 import AddNewBook from '../../components/AddNewBook'
 const Home = () => {
   const dispatch = useDispatch()
-  const books = useSelector(selectData) // get data for the current page
   const totalBooks = useSelector(state => state.bookSlice.bookData) // all books data
   const currentPage = useSelector(state => state.bookSlice.currentPage); // current page number
   const itemsPerPage = useSelector(state => state.bookSlice.itemsPerPage); // items per page
   const totalPages = Math.ceil(totalBooks.length / itemsPerPage); // calculate total pages
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  
   
   const [searchKeyword, setSearchKeyword] = useState(''); // search value
 
@@ -24,8 +26,8 @@ const Home = () => {
   const [editBook, setEditBook] = useState(null); // targeted book to edit
 
   const theme = {
-    primaryColor: "blue",
-    secondaryColor: "red"
+    primaryColor: "#f0f8ff",
+    secondaryColor: "#ff0000"
   }
 
   const handleSort = (column) => {  // apply sorting when clicking on specific column
@@ -37,7 +39,14 @@ const Home = () => {
     }
   };
 
-  const sortedData = [...books].sort((a, b) => { // logic to sort data
+  const getSortOrder = (column) => { // to indicate the data sorted ascending or descending with respect to specific column
+    if(column === sortColumn) {
+      return <span className='sort-order'>{sortOrder}</span>
+    }
+    return ''
+  }
+
+  const sortedData = [...totalBooks].sort((a, b) => { // logic to sort data
     if (sortColumn === 'id') {
       return sortOrder === 'asc' ? a.id - b.id : b.id - a.id;
     } else if (sortColumn === 'title') {
@@ -54,6 +63,7 @@ const Home = () => {
     return 0;
   });
 
+  const pageData = sortedData.slice(startIndex,endIndex)
   
   const handlePreviousPage = () => { // when click on previous button
     if (currentPage > 1) {
@@ -95,33 +105,39 @@ const Home = () => {
     );
   });
 
+  const filteredPageData = filteredData.slice(startIndex,endIndex)
+
   return (
     <ThemeProvider theme={theme}>
     <HomeStyle>
       <WrapperComponent>
         <h1>Books Management System</h1>
-        <input type='text' value={searchKeyword} onChange={handleSearch} placeholder='search'></input>
+        <div className='row'>
+        <div className='display-books'>
+        <input type='text' className='search-field' value={searchKeyword} onChange={handleSearch} placeholder='search here...'></input>
         <table>
-          <BookDataHeading handleSort={handleSort} />
+          <BookDataHeading handleSort={handleSort} getSortOrder={getSortOrder}/>
           <tbody>
               { searchKeyword === '' ?
-              (sortedData.map((book,i) => (
+              (pageData.map((book,i) => (
                 <BookContent book={book} key={i} handleEdit={handleEdit} />
               ))) :
-              (filteredData.map((book,i) => (
+              (filteredPageData.map((book,i) => (
                 <BookContent book={book} key={i} handleEdit={handleEdit} />
               )))
             }
           </tbody>
         </table>
-        <div className='page-controls'>
-        <button onClick={handlePreviousPage} disabled={currentPage === 1}>Previous</button>
+        <PageControls className='page-controls'>
+        <button onClick={handlePreviousPage} disabled={currentPage === 1} className='slide-btn'>Previous</button>
         {Array.from({ length: totalPages }, (_, i) => (
-          <button key={i} onClick={() => handlePageClick(i + 1)} disabled={currentPage === i + 1}>{i + 1}</button>
+          <button key={i} onClick={() => handlePageClick(i + 1)} disabled={currentPage === i + 1} className={ currentPage === i+1 ? "current-page" : ""} >{i + 1}</button>
         ))}
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages} className='slide-btn'>Next</button>
+      </PageControls>
       </div>
       <AddNewBook editBook={editBook} setEditBook={setEditBook} />
+      </div>
       </WrapperComponent>
     </HomeStyle>
     </ThemeProvider>

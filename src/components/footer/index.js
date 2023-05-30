@@ -1,13 +1,14 @@
 import React from 'react'
 import WrapperComponent from '../wrapper'
+import { FooterStyle } from './styled'
 
 const FooterComponent = () => {
   return (
-    <footer>
+    <FooterStyle>
       <WrapperComponent>
-        Footer
+      <span>&copy;Copyright 2023. All rights reserved &reg;</span>
       </WrapperComponent>
-    </footer>
+    </FooterStyle>
   )
 }
 

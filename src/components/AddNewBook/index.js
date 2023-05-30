@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addAuthor, addBook, addCategory, deleteBook, editBookInfo } from '../../features/bookSlice'
+import { AddNewBookStyle, AddSectionStyle } from './styled'
 
 const AddNewBook = ({editBook,setEditBook}) => {
   const categories = useSelector(state => state.bookSlice.categories) // fetch categories
@@ -20,6 +21,7 @@ const AddNewBook = ({editBook,setEditBook}) => {
   const handleAddBook = (e) => {  // add new book 
     e.preventDefault()
     if(!title || !category || !publishedDate || !author) {
+      alert("Please make sure you have filled all data")
       return;
     }
 
@@ -93,6 +95,22 @@ const AddNewBook = ({editBook,setEditBook}) => {
     setDisplayAddAuthor(true)
   }
 
+  const handleCancelEDit = () => {
+    setEditBook(null)
+    setTitle('')
+    setCategory('')
+    setPublishedDate('')
+    setAuthor('')
+  }
+
+  const CancelAddCategory = () => {
+    setDisplayAddCategory(false)
+  }
+
+  const CancelAddAuthor = () => {
+    setDisplayAddAuthor(false)
+  }
+
   useEffect(() => {
     if(editBook) {
       setTitle(editBook.title)
@@ -103,16 +121,19 @@ const AddNewBook = ({editBook,setEditBook}) => {
   },[editBook])
 
   return (
-    <div>
-      <h2>Add New Book</h2>
+    <AddNewBookStyle>
+      <h2>{editBook? "Edit your book" : "Add New Book"}</h2>
       <form>
-        <label htmlFor='title'>Title:</label>
+        <div className='title-section'>
+        <label htmlFor='title'>Title: </label>
         <input type='text' id='title' value={title} onChange={e => setTitle(e.target.value)} />
-
-        <label htmlFor='publishedDate'>Published Date:</label>
+        </div>
+        <div className='date-section'>
+        <label htmlFor='publishedDate'>Published Date: </label>
         <input type='date' id='publishedDate' value={publishedDate} onChange={e => setPublishedDate(e.target.value)}/>
-
-        <label htmlFor='category'>Category:</label>
+        </div>
+        <div className='category-section'>
+        <label htmlFor='category'>Category: </label>
         <select id="category" value={category} onChange={e => setCategory(e.target.value)}>
         <option value=''>{category ? category : "Select Category"}</option>
         {
@@ -123,19 +144,20 @@ const AddNewBook = ({editBook,setEditBook}) => {
           ))
         }
         </select>
-
-        <button type='button' onClick={() => showCategory()}>Add Category</button>
+        <button type='button' onClick={() => showCategory()}>Add New</button>
         {
           displayAddCategory && (
-            <div className='add-category'>
+            <AddSectionStyle className='add-category'>
+              <h3>Add New Category</h3>
               <input type='text' value={newCategory} onChange={(e) => handleCategoryChange(e)} />
               <button onClick={() => handleCategory()}>Add</button>
-            </div>
+              <button onClick={() => CancelAddCategory()}>Cancel</button>
+            </AddSectionStyle>
           )
         }
-
-
-        <label htmlFor='author'>Author:</label>
+        </div>
+        <div className='author-section'>
+        <label htmlFor='author'>Author: </label>
         <select id="author" value={author} onChange={e => setAuthor(e.target.value)}>
         <option value=''>{author ? author : "Select Author"}</option>
         {
@@ -147,22 +169,31 @@ const AddNewBook = ({editBook,setEditBook}) => {
         }
         </select>
 
-        <button type='button' onClick={() => showAuthor()}>Add Author</button>
+        <button type='button' onClick={() => showAuthor()}>Add New</button>
         {
           displayAddAuthor && (
-            <div className='add-author'>
+            <AddSectionStyle className='add-author'>
+              <h3>Add New Author</h3>
               <input type='text' value={newAuthor} onChange={(e) => handleAuthorChange(e)} />
               <button onClick={() => handleAuthor()}>Add</button>
-            </div>
+              <button onClick={() => CancelAddAuthor()}>Cancel</button>
+            </AddSectionStyle>
           )
         }
+        </div>
+        <div className='btn-section'>
+        <button type='button' onClick={(e) => handleAddBook(e)} className='add-btn'>{editBook ? "Save" : "Add"}</button>
 
-        <button type='button' onClick={(e) => handleAddBook(e)}>{editBook ? "Edit" : "Add"}</button>
+        { editBook ? (
+          <>
+          <button onClick={(e) => handleDelete(e)} className='delete-btn'>Delete</button>
+          <button onClick={(e) => handleCancelEDit(e)} className='cancel-btn'>Cancel</button>
+          </>
+          ) : ''}
 
-        { editBook ? (<button onClick={(e) => handleDelete(e)}>Delete</button>) : ''}
-
+        </div>
       </form>
-    </div>
+    </AddNewBookStyle>
   )
 }
 
