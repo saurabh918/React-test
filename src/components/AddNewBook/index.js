@@ -54,7 +54,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
     const checkTitle = totalBooks.find((book) => book.title === title);
     if (checkTitle) {
-      alert("Found duplicate entry");
+      alert("Found duplicate entry (title)");
       return;
     }
 
@@ -174,6 +174,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
             <input
               type="text"
               id="title"
+              maxLength={12}
               value={title}
               placeholder="Book Title..."
               onChange={(e) => setTitle(e.target.value)}
@@ -256,7 +257,11 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
             {editBook ? (
               <>
-                <button type="button" onClick={(e) => handleDelete(e)} className="delete-btn">
+                <button
+                  type="button"
+                  onClick={(e) => handleDelete(e)}
+                  className="delete-btn"
+                >
                   Delete
                 </button>
                 <button

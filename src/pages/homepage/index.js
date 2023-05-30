@@ -14,7 +14,8 @@ const Home = () => {
   const itemsPerPage = useSelector((state) => state.bookSlice.itemsPerPage); // items per page
   const totalPages = Math.ceil(totalBooks.length / itemsPerPage); // calculate total pages
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
+  //to select books to show on current page
+  const startIndex = (currentPage - 1) * itemsPerPage; 
   const endIndex = startIndex + itemsPerPage;
 
   const [searchKeyword, setSearchKeyword] = useState(""); // search value
@@ -47,7 +48,7 @@ const Home = () => {
   };
 
   const sortedData = [...totalBooks].sort((a, b) => {
-    // logic to sort data
+    // logic to sort data when user click on any column title
     if (sortColumn === "id") {
       return sortOrder === "asc" ? a.id - b.id : b.id - a.id;
     } else if (sortColumn === "title") {
@@ -104,11 +105,10 @@ const Home = () => {
     }
   };
 
-  const filteredData = totalBooks.filter((item) => {
+  const filteredData = sortedData.filter((item) => {
     // get data on the basis of searched value
     const { id, title, category, publish_date, author } = item;
     const lowerCaseKeyword = searchKeyword.toLowerCase();
-    console.log(currentPage);
     return (
       id.toString().includes(lowerCaseKeyword) ||
       title.toLowerCase().includes(lowerCaseKeyword) ||
@@ -119,7 +119,6 @@ const Home = () => {
   });
 
   const filteredPages = Math.ceil(filteredData.length / itemsPerPage);
-  console.log(filteredPages);
 
   const filteredPageData = filteredData.slice(startIndex, endIndex);
 
@@ -130,10 +129,10 @@ const Home = () => {
 
   useEffect(() => {
     const updatedTotalPages = Math.ceil(totalBooks.length / itemsPerPage);
-    if(currentPage > updatedTotalPages) {
-      dispatch(setPage(updatedTotalPages))
+    if (currentPage > updatedTotalPages) {
+      dispatch(setPage(updatedTotalPages));
     }
-  },[totalBooks])
+  }, [totalBooks, currentPage, dispatch, itemsPerPage]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -176,7 +175,9 @@ const Home = () => {
                 <button
                   type="button"
                   onClick={handlePreviousPage}
-                  disabled={currentPage === 1}
+                  disabled={
+                    currentPage === 1 || filteredPages === 0 || totalPages === 0
+                  }
                   className="slide-btn"
                 >
                   Previous
@@ -198,7 +199,13 @@ const Home = () => {
                 <button
                   type="button"
                   onClick={handleNextPage}
-                  disabled={filteredPages ? currentPage === filteredPages : currentPage === totalPages }
+                  disabled={
+                    filteredPages
+                      ? currentPage === filteredPages
+                      : currentPage === totalPages ||
+                        filteredPages === 0 ||
+                        totalPages === 0
+                  }
                   className="slide-btn"
                 >
                   Next

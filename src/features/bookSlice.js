@@ -27,7 +27,7 @@ const initialState = {
     {
       id: 4,
       title: "Book 4",
-      category: "Science Fiction",
+      category: "Science",
       publish_date: "2019-05-30",
       author: "Emily Davis",
     },
@@ -62,7 +62,7 @@ const initialState = {
     {
       id: 9,
       title: "Book 9",
-      category: "Science Fiction",
+      category: "Science",
       publish_date: "2012-05-27",
       author: "Emily Davis",
     },
@@ -97,7 +97,7 @@ const initialState = {
     {
       id: 14,
       title: "Book 14",
-      category: "Science Fiction",
+      category: "Science",
       publish_date: "2016-15-30",
       author: "Emily Davis",
     },
@@ -111,13 +111,7 @@ const initialState = {
   ],
   currentPage: 1, // current page number
   itemsPerPage: 5, // books to show on single page
-  categories: [
-    "Fiction",
-    "Non-Fiction",
-    "Mystery",
-    "Science Fiction",
-    "Biography",
-  ], // initially set categories
+  categories: ["Fiction", "Non-Fiction", "Mystery", "Science", "Biography"], // initially set categories
   authors: [
     "John Doe",
     "Jane Smith",

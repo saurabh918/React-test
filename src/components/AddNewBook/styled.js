@@ -32,6 +32,7 @@ export const AddNewBookStyle = styled.div`
       border: 1px solid #ffff00;
       border-radius: 5px;
       background-color: #00008b;
+      cursor: pointer;
       &:hover {
         background-color: #add8e6;
         color: #00008b;

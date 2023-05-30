@@ -12,4 +12,7 @@ export const AddSectionStyle = styled.div`
   @media only screen and (max-width: 400px) {
     padding: 2% 6% 8%;
   }
+  button {
+    cursor: pointer;
+  }
 `;
