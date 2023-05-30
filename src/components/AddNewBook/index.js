@@ -51,7 +51,7 @@ const AddNewBook = ({editBook,setEditBook}) => {
       }
 
       dispatch(addBook(newBook))
-
+      alert("New book added")
       setTitle('')
       setCategory('')
       setPublishedDate('')
@@ -168,7 +168,7 @@ const AddNewBook = ({editBook,setEditBook}) => {
           <select id="author" value={author} onChange={e => setAuthor(e.target.value)}>
           <option value=''>{author ? author : "Select Author"}</option>
           {
-            categories.map((author,i) => (
+            authors.map((author,i) => (
               <option key={i} value={author}>
                 {author}
               </option>
