@@ -60,9 +60,14 @@ const Home = () => {
         ? a.category.localeCompare(b.category)
         : b.category.localeCompare(a.category);
     } else if (sortColumn === "publish_date") {
-      const dateA = new Date(a.publish_date);
-      const dateB = new Date(b.publish_date);
-      return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+      const dateA = new Date(a.publish_date).getTime();
+      const dateB = new Date(b.publish_date).getTime();
+  
+      if (dateA < dateB) {
+        return sortOrder === "asc" ? -1 : 1;
+      } else if (dateA > dateB) {
+        return sortOrder === "asc" ? 1 : -1;
+      }
     } else if (sortColumn === "author") {
       return sortOrder === "asc"
         ? a.category.localeCompare(b.author)
