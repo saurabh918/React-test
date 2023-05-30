@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components";
 import BookContent from "../../components/bookContents";
 import BookDataHeading from "../../components/bookDataTitles";
 import { setPage } from "../../features/bookSlice";
-import AddNewBook from "../../components/addNewBook";
+import AddNewBook from "../../components/AddNewBook";
 const Home = () => {
   const dispatch = useDispatch();
   const totalBooks = useSelector((state) => state.bookSlice.bookData); // all books data
