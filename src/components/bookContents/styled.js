@@ -8,7 +8,7 @@ export const BookContentStyling = styled.tr`
   
   td {
     padding: 10px 20px;
-    color: #fffaf0;
+    color: ${props => props.theme.tdColor};
     &:last-child {
       cursor: pointer;
       &:hover {

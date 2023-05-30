@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addAuthor, addBook, addCategory, deleteBook, editBookInfo } from '../../features/bookSlice'
 import { AddNewBookStyle, AddSectionStyle } from './styled'
+import { ThemeProvider } from 'styled-components'
 
 const AddNewBook = ({editBook,setEditBook}) => {
   const categories = useSelector(state => state.bookSlice.categories) // fetch categories
@@ -120,80 +121,87 @@ const AddNewBook = ({editBook,setEditBook}) => {
     }
   },[editBook])
 
+  const theme = {
+    headingColor: '#faebd7',
+    labelColor: '#ffffff'
+  }
+
   return (
-    <AddNewBookStyle>
-      <h2>{editBook? "Edit your book" : "Add New Book"}</h2>
-      <form>
-        <div className='title-section'>
-        <label htmlFor='title'>Title: </label>
-        <input type='text' id='title' value={title} onChange={e => setTitle(e.target.value)} />
-        </div>
-        <div className='date-section'>
-        <label htmlFor='publishedDate'>Published Date: </label>
-        <input type='date' id='publishedDate' value={publishedDate} onChange={e => setPublishedDate(e.target.value)}/>
-        </div>
-        <div className='category-section'>
-        <label htmlFor='category'>Category: </label>
-        <select id="category" value={category} onChange={e => setCategory(e.target.value)}>
-        <option value=''>{category ? category : "Select Category"}</option>
-        {
-          categories.map((cat,i) => (
-            <option key={i} value={cat}>
-              {cat}
-            </option>
-          ))
-        }
-        </select>
-        <button type='button' onClick={() => showCategory()}>Add New</button>
-        {
-          displayAddCategory && (
-            <AddSectionStyle className='add-category'>
-              <h3>Add New Category</h3>
-              <input type='text' value={newCategory} onChange={(e) => handleCategoryChange(e)} />
-              <button onClick={() => handleCategory()}>Add</button>
-              <button onClick={() => CancelAddCategory()}>Cancel</button>
-            </AddSectionStyle>
-          )
-        }
-        </div>
-        <div className='author-section'>
-        <label htmlFor='author'>Author: </label>
-        <select id="author" value={author} onChange={e => setAuthor(e.target.value)}>
-        <option value=''>{author ? author : "Select Author"}</option>
-        {
-          categories.map((author,i) => (
-            <option key={i} value={author}>
-              {author}
-            </option>
-          ))
-        }
-        </select>
+    <ThemeProvider theme={theme}>
+      <AddNewBookStyle>
+        <h2>{editBook? "Edit your book" : "Add New Book"}</h2>
+        <form>
+          <div className='title-section'>
+          <label htmlFor='title'>Title: </label>
+          <input type='text' id='title' value={title} onChange={e => setTitle(e.target.value)} />
+          </div>
+          <div className='date-section'>
+          <label htmlFor='publishedDate'>Published Date: </label>
+          <input type='date' id='publishedDate' value={publishedDate} onChange={e => setPublishedDate(e.target.value)}/>
+          </div>
+          <div className='category-section'>
+          <label htmlFor='category'>Category: </label>
+          <select id="category" value={category} onChange={e => setCategory(e.target.value)}>
+          <option value=''>{category ? category : "Select Category"}</option>
+          {
+            categories.map((cat,i) => (
+              <option key={i} value={cat}>
+                {cat}
+              </option>
+            ))
+          }
+          </select>
+          <button type='button' onClick={() => showCategory()}>Add New</button>
+          {
+            displayAddCategory && (
+              <AddSectionStyle className='add-category'>
+                <h3>Add New Category</h3>
+                <input type='text' value={newCategory} onChange={(e) => handleCategoryChange(e)} />
+                <button onClick={() => handleCategory()}>Add</button>
+                <button onClick={() => CancelAddCategory()}>Cancel</button>
+              </AddSectionStyle>
+            )
+          }
+          </div>
+          <div className='author-section'>
+          <label htmlFor='author'>Author: </label>
+          <select id="author" value={author} onChange={e => setAuthor(e.target.value)}>
+          <option value=''>{author ? author : "Select Author"}</option>
+          {
+            categories.map((author,i) => (
+              <option key={i} value={author}>
+                {author}
+              </option>
+            ))
+          }
+          </select>
 
-        <button type='button' onClick={() => showAuthor()}>Add New</button>
-        {
-          displayAddAuthor && (
-            <AddSectionStyle className='add-author'>
-              <h3>Add New Author</h3>
-              <input type='text' value={newAuthor} onChange={(e) => handleAuthorChange(e)} />
-              <button onClick={() => handleAuthor()}>Add</button>
-              <button onClick={() => CancelAddAuthor()}>Cancel</button>
-            </AddSectionStyle>
-          )
-        }
-        </div>
-        <div className='btn-section'>
-        <button type='button' onClick={(e) => handleAddBook(e)} className='add-btn'>{editBook ? "Save" : "Add"}</button>
+          <button type='button' onClick={() => showAuthor()}>Add New</button>
+          {
+            displayAddAuthor && (
+              <AddSectionStyle className='add-author'>
+                <h3>Add New Author</h3>
+                <input type='text' value={newAuthor} onChange={(e) => handleAuthorChange(e)} />
+                <button onClick={() => handleAuthor()}>Add</button>
+                <button onClick={() => CancelAddAuthor()}>Cancel</button>
+              </AddSectionStyle>
+            )
+          }
+          </div>
+          <div className='btn-section'>
+          <button type='button' onClick={(e) => handleAddBook(e)} className='add-btn'>{editBook ? "Save" : "Add"}</button>
 
-        { editBook ? (
-          <>
-          <button onClick={(e) => handleDelete(e)} className='delete-btn'>Delete</button>
-          <button onClick={(e) => handleCancelEDit(e)} className='cancel-btn'>Cancel</button>
-          </>
-          ) : ''}
+          { editBook ? (
+            <>
+            <button onClick={(e) => handleDelete(e)} className='delete-btn'>Delete</button>
+            <button onClick={(e) => handleCancelEDit(e)} className='cancel-btn'>Cancel</button>
+            </>
+            ) : ''}
 
-        </div>
-      </form>
-    </AddNewBookStyle>
+          </div>
+        </form>
+      </AddNewBookStyle>
+    </ThemeProvider>
   )
 }
 

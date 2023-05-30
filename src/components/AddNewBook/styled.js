@@ -4,7 +4,7 @@ export const AddNewBookStyle = styled.div`
   flex-basis: 50%;
 
   h2 {
-    color: #faebd7;
+    color: ${props => props.theme.headingColor};
   }
 
   form {
@@ -76,7 +76,7 @@ export const AddNewBookStyle = styled.div`
   }
 
   label {
-    color: #fff;
+    color: ${props => props.theme.labelColor};
   }
 `;
 

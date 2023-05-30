@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const BookTitleStyling = styled.thead`
-  color: #f5deb3;
+  color: ${props => props.theme.thColor};
 
   th {
       cursor: pointer;
