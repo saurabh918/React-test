@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle` // styled component for global styling
   body,#root {
     min-height: 100vh; 
     display: flex; 

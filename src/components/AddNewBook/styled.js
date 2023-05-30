@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const AddNewBookStyle = styled.div`
+export const AddNewBookStyle = styled.div`  // styled component for add new book section
   flex-basis: 50%;
 
   h2 {
@@ -82,5 +82,12 @@ export const AddNewBookStyle = styled.div`
 
   label {
     color: ${(props) => props.theme.labelColor};
+  }
+
+  option {
+    &:first-child {  // to show the selected option
+      background-color: #008000;
+      color: #ffffff;
+    }
   }
 `;

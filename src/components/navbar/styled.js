@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const NavbarStyle = styled.div`
+export const NavbarStyle = styled.div` // styled component for navbar
   a {
     margin: auto 20px;
     font-size: ${(props) => props.theme.fontSize};

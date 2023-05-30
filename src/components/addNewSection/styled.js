@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const AddSectionStyle = styled.div`
+export const AddSectionStyle = styled.div` // styled component for add new author or category popup
   padding: 2% 2% 4%;
   position: fixed;
   top: 50%;

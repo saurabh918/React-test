@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const BookContentStyling = styled.tr`
+export const BookContentStyling = styled.tr` // styled component for books list
   &:hover {
     border: 2px solid #fff;
   }

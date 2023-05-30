@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const BookTitleStyling = styled.thead`
+export const BookTitleStyling = styled.thead` // styled component for books table column headings
   color: ${(props) => props.theme.thColor};
 
   th {

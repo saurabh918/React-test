@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const HomeStyle = styled.div`
+export const HomeStyle = styled.div` // styled component for homepage
   flex-grow: 1;
   text-align: center;
 
