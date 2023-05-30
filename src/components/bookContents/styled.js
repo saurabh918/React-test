@@ -1,14 +1,13 @@
 import { styled } from "styled-components";
 
 export const BookContentStyling = styled.tr`
-  
   &:hover {
-        border: 2px solid #fff;
-    }
-  
+    border: 2px solid #fff;
+  }
+
   td {
     padding: 10px 20px;
-    color: ${props => props.theme.tdColor};
+    color: ${(props) => props.theme.tdColor};
     white-space: nowrap;
     &:last-child {
       cursor: pointer;
@@ -21,4 +20,4 @@ export const BookContentStyling = styled.tr`
       font-size: 10px;
     }
   }
-`
+`;

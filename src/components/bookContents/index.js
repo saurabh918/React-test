@@ -1,10 +1,10 @@
-import React from 'react'
-import { BookContentStyling } from './styled'
-import { ThemeProvider } from 'styled-components'
-const BookContent = ({book,handleEdit}) => {
+import React from "react";
+import { BookContentStyling } from "./styled";
+import { ThemeProvider } from "styled-components";
+const BookContent = ({ book, handleEdit }) => {
   const theme = {
-    tdColor: '#fffaf0'
-  }
+    tdColor: "#fffaf0",
+  };
   return (
     <ThemeProvider theme={theme}>
       <BookContentStyling>
@@ -13,10 +13,10 @@ const BookContent = ({book,handleEdit}) => {
         <td>{book.category}</td>
         <td>{book.publish_date}</td>
         <td>{book.author}</td>
-        <td onClick={()=>handleEdit(book.id)}>Edit</td>
+        <td onClick={() => handleEdit(book.id)}>Edit</td>
       </BookContentStyling>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default BookContent
+export default BookContent;

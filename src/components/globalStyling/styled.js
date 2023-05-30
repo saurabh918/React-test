@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
- 
+import { createGlobalStyle } from "styled-components";
+
 const GlobalStyle = createGlobalStyle`
   body,#root {
     min-height: 100vh; 
@@ -29,5 +29,5 @@ const GlobalStyle = createGlobalStyle`
 }
 
 `;
- 
+
 export default GlobalStyle;

@@ -17,8 +17,8 @@ const AddNewBook = ({ editBook, setEditBook }) => {
   const totalBooks = useSelector((state) => state.bookSlice.bookData); // all books data
   const [displayAddCategory, setDisplayAddCategory] = useState(false); // to show or hide add category popup
   const [displayAddAuthor, setDisplayAddAuthor] = useState(false); // to show or hide add author popup
-  const [newCategory, setNewCategory] = useState("");
-  const [newAuthor, setNewAuthor] = useState("");
+  const [newCategory, setNewCategory] = useState(""); // to get new category name
+  const [newAuthor, setNewAuthor] = useState(""); // to get new author name
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
@@ -75,10 +75,12 @@ const AddNewBook = ({ editBook, setEditBook }) => {
   };
 
   const handleCategoryChange = (e) => {
+    // set new category value
     setNewCategory(e.target.value);
   };
 
   const handleAuthorChange = (e) => {
+    // set new author value
     setNewAuthor(e.target.value);
   };
 
@@ -88,7 +90,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
       dispatch(addCategory(newCategory));
     }
     setDisplayAddCategory(false);
-    document.body.classList.remove('disable-scroll')
+    document.body.classList.remove("disable-scroll");
     setCategory(newCategory);
     setNewCategory("");
   };
@@ -99,26 +101,35 @@ const AddNewBook = ({ editBook, setEditBook }) => {
       dispatch(addAuthor(newAuthor));
     }
     setDisplayAddAuthor(false);
-    document.body.classList.remove('disable-scroll')
+    document.body.classList.remove("disable-scroll");
     setAuthor(newAuthor);
     setNewAuthor("");
   };
 
   const handleDelete = () => {
+    // delete book from store
     dispatch(deleteBook(editBook.id));
+    setEditBook(null);
+    setTitle("");
+    setCategory("");
+    setPublishedDate("");
+    setAuthor("");
   };
 
   const showCategory = () => {
+    // to show popup to fill new category name
     setDisplayAddCategory(true);
-    document.body.classList.add('disable-scroll')
+    document.body.classList.add("disable-scroll");
   };
 
   const showAuthor = () => {
+    // to show popup to fill new author name
     setDisplayAddAuthor(true);
-    document.body.classList.add('disable-scroll')
+    document.body.classList.add("disable-scroll");
   };
 
   const handleCancelEDit = () => {
+    // when user hit cancel button after editing book
     setEditBook(null);
     setTitle("");
     setCategory("");
@@ -127,16 +138,19 @@ const AddNewBook = ({ editBook, setEditBook }) => {
   };
 
   const CancelAddCategory = () => {
+    // when user hit cancel button while adding new category
     setDisplayAddCategory(false);
-    document.body.classList.remove('disable-scroll')
+    document.body.classList.remove("disable-scroll");
   };
 
   const CancelAddAuthor = () => {
+    // when user hit cancel button while adding new author
     setDisplayAddAuthor(false);
-    document.body.classList.remove('disable-scroll')
+    document.body.classList.remove("disable-scroll");
   };
 
   useEffect(() => {
+    // to check if the user click to edit the book
     if (editBook) {
       setTitle(editBook.title);
       setCategory(editBook.category);
@@ -161,6 +175,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
               type="text"
               id="title"
               value={title}
+              placeholder="Book Title..."
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -241,7 +256,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
             {editBook ? (
               <>
-                <button onClick={(e) => handleDelete(e)} className="delete-btn">
+                <button type="button" onClick={(e) => handleDelete(e)} className="delete-btn">
                   Delete
                 </button>
                 <button
