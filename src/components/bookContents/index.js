@@ -1,8 +1,8 @@
 import React from "react";
-import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit,AiOutlineDelete } from 'react-icons/ai';
 
 import { BookContentStyling } from "./styled";
-const BookContent = ({ book, handleEdit }) => {
+const BookContent = ({ book, handleEdit,handleDelete }) => {
   return (
       <BookContentStyling>
         <td>{book.id}</td>
@@ -11,6 +11,7 @@ const BookContent = ({ book, handleEdit }) => {
         <td>{book.publish_date}</td>
         <td>{book.author}</td>
         <td onClick={() => handleEdit(book.id)}><AiOutlineEdit /></td>
+        <td onClick={() => handleDelete(book.id)}><AiOutlineDelete /></td>
       </BookContentStyling>
   );
 };

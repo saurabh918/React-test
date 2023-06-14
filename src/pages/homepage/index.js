@@ -4,7 +4,7 @@ import WrapperComponent from "../../components/wrapper";
 import { useDispatch, useSelector } from "react-redux";
 import BookContent from "../../components/bookContents";
 import BookDataHeading from "../../components/bookDataTitles";
-import { setPage } from "../../reducers/bookSlice";
+import { deleteBook, setPage } from "../../reducers/bookSlice";
 import AddNewBook from "../../components/AddNewBook";
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,6 @@ const Home = () => {
   const endIndex = startIndex + itemsPerPage;
 
   const [searchKeyword, setSearchKeyword] = useState(""); // search value
-
   const [sortColumn, setSortColumn] = useState(null); // column which is referred for sorting
   const [sortOrder, setSortOrder] = useState("asc"); // decide ascending or descending
   const [editBook, setEditBook] = useState(null); // targeted book to edit
@@ -108,6 +107,11 @@ const Home = () => {
     }
   };
 
+  const handleDelete = (id) => {
+    // delete book from store
+    dispatch(deleteBook(id));
+  };
+
   const filteredData = sortedData.filter((item) => {
     // get data on the basis of searched value
     const { id, title, category, publish_date, author } = item;
@@ -167,6 +171,7 @@ const Home = () => {
                           book={book}
                           key={i}
                           handleEdit={handleEdit}
+                          handleDelete={handleDelete}
                         />
                       ))
                     : filteredPageData.map((book, i) => (
@@ -174,6 +179,7 @@ const Home = () => {
                           book={book}
                           key={i}
                           handleEdit={handleEdit}
+                          handleDelete={handleDelete}
                         />
                       ))}
                 </tbody>

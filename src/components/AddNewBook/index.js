@@ -4,7 +4,6 @@ import {
   addAuthor,
   addBook,
   addCategory,
-  deleteBook,
   editBookInfo,
 } from "../../reducers/bookSlice";
 import { AddNewBookStyle } from "./styled";
@@ -159,15 +158,6 @@ const AddNewBook = ({ editBook, setEditBook }) => {
     setAuthor("");
   };
 
-  const handleDelete = () => {
-    // delete book from store
-    dispatch(deleteBook(editBook.id));
-    setEditBook(null);
-    setTitle("");
-    setCategory("");
-    setPublishedDate("");
-    setAuthor("");
-  };
 
   const CancelAddCategory = () => {
     // when user hit cancel button while adding new category
@@ -283,13 +273,6 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
             {editBook && (
               <>
-              <button
-                  type="button"
-                  onClick={(e) => handleDelete(e)}
-                  className="delete-btn"
-                >
-                  Delete
-                </button>
                 <button
                   onClick={(e) => handleCancelEDit(e)}
                   className="cancel-btn"

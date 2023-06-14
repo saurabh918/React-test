@@ -29,6 +29,7 @@ const BookDataHeading = ({ handleSort, getSortOrder }) => {
             Author {getSortOrder("author")}
           </th>
           <th>Edit</th>
+          <th>Delete</th>
         </tr>
       </BookTitleStyling>
     </ThemeProvider>
