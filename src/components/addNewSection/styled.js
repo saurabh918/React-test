@@ -7,7 +7,7 @@ export const AddSectionStyle = styled.div` // styled component for add new autho
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 10px 10px;
-  background-color: ${(props) => props.theme.background};
+  background-color: #faebd7;
   pointer-events: auto;
   @media only screen and (max-width: 400px) {
     padding: 2% 6% 8%;

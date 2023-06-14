@@ -6,9 +6,8 @@ import {
   addCategory,
   deleteBook,
   editBookInfo,
-} from "../../features/bookSlice";
+} from "../../reducers/bookSlice";
 import { AddNewBookStyle } from "./styled";
-import { ThemeProvider } from "styled-components";
 import AddNewSection from "../addNewSection";
 
 const AddNewBook = ({ editBook, setEditBook }) => {
@@ -48,7 +47,6 @@ const AddNewBook = ({ editBook, setEditBook }) => {
       setCategory("");
       setPublishedDate("");
       setAuthor("");
-      setEditBook(null);
       return;
     }
 
@@ -66,6 +64,8 @@ const AddNewBook = ({ editBook, setEditBook }) => {
       author: author,
     };
 
+    console.log(author)
+
     dispatch(addBook(newBook));
     alert("New book added");
     setTitle("");
@@ -81,13 +81,30 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
   const handleAuthorChange = (e) => {
     // set new author value
-    setNewAuthor(e.target.value);
+      setNewAuthor(e.target.value);
   };
 
   const handleCategory = () => {
     // add new category
-    if (newCategory && !categories.includes(newCategory)) {
-      dispatch(addCategory(newCategory));
+    if (newCategory) {
+      const matchingCategory = categories.find(existingCat =>
+        existingCat.trim().toLowerCase() === category.trim().toLowerCase()
+      );
+      
+      if (matchingCategory) {
+        setAuthor(matchingCategory);
+      } else {
+        setNewCategory(newCategory);
+        dispatch(addCategory(newCategory));
+      }
+      // categories.map((existingCat) => {
+      //   if(existingCat.trim().toLowerCase() === category.trim().toLowerCase()) {
+      //     setAuthor(existingCat)
+      //     return;
+      //   } 
+      //   setNewCategory(newCategory)
+      //   dispatch(addCategory(newCategory));
+      // })
     }
     setDisplayAddCategory(false);
     document.body.classList.remove("disable-scroll");
@@ -97,23 +114,28 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
   const handleAuthor = () => {
     // add new author
-    if (newAuthor && !authors.includes(newAuthor)) {
-      dispatch(addAuthor(newAuthor));
+    // if (newAuthor && !(authors.some((existingAuthor) => existingAuthor.trim().toLowerCase() === author.trim().toLowerCase()))) {
+    //   dispatch(addAuthor(newAuthor));
+    // } else {
+    //   setNewAuthor()
+    // }
+
+    if(newAuthor) {
+      const matchingAuthor = authors.find(existingAuthor =>
+        existingAuthor.trim().toLowerCase() === author.trim().toLowerCase()
+      );
+      
+      if (matchingAuthor) {
+        setAuthor(matchingAuthor);
+      } else {
+        setNewAuthor(newAuthor);
+        dispatch(addAuthor(newAuthor));
+      }
     }
     setDisplayAddAuthor(false);
     document.body.classList.remove("disable-scroll");
     setAuthor(newAuthor);
     setNewAuthor("");
-  };
-
-  const handleDelete = () => {
-    // delete book from store
-    dispatch(deleteBook(editBook.id));
-    setEditBook(null);
-    setTitle("");
-    setCategory("");
-    setPublishedDate("");
-    setAuthor("");
   };
 
   const showCategory = () => {
@@ -130,6 +152,16 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
   const handleCancelEDit = () => {
     // when user hit cancel button after editing book
+    setEditBook(null);
+    setTitle("");
+    setCategory("");
+    setPublishedDate("");
+    setAuthor("");
+  };
+
+  const handleDelete = () => {
+    // delete book from store
+    dispatch(deleteBook(editBook.id));
     setEditBook(null);
     setTitle("");
     setCategory("");
@@ -159,13 +191,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
     }
   }, [editBook]);
 
-  const theme = {
-    headingColor: "#faebd7",
-    labelColor: "#ffffff",
-  };
-
   return (
-    <ThemeProvider theme={theme}>
       <AddNewBookStyle>
         <h2>{editBook ? "Edit your book" : "Add New Book"}</h2>
         <form>
@@ -205,7 +231,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
                 </option>
               ))}
             </select>
-            <button type="button" onClick={() => showCategory()}>
+            <button type="button" onClick={showCategory}>
               Add New
             </button>
             {displayAddCategory && (
@@ -233,7 +259,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
               ))}
             </select>
 
-            <button type="button" onClick={() => showAuthor()}>
+            <button type="button" onClick={showAuthor}>
               Add New
             </button>
             {displayAddAuthor && (
@@ -255,9 +281,9 @@ const AddNewBook = ({ editBook, setEditBook }) => {
               {editBook ? "Save" : "Add"}
             </button>
 
-            {editBook ? (
+            {editBook && (
               <>
-                <button
+              <button
                   type="button"
                   onClick={(e) => handleDelete(e)}
                   className="delete-btn"
@@ -271,15 +297,12 @@ const AddNewBook = ({ editBook, setEditBook }) => {
                   Cancel
                 </button>
               </>
-            ) : (
-              ""
             )}
           </div>
         </form>
         <p>Number of Books: {totalBooks.length}</p>
         <p>Number of Authors: {authors.length}</p>
       </AddNewBookStyle>
-    </ThemeProvider>
   );
 };
 

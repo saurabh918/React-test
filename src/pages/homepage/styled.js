@@ -6,7 +6,7 @@ export const HomeStyle = styled.div` // styled component for homepage
 
   h1 {
     font-size: 50px;
-    color: ${(props) => props.theme.primaryColor};
+    color: #f0f8ff;
     font-weight: bold;
     @media only screen and (max-width: 1024px) {
       font-size: 40px;
@@ -26,9 +26,16 @@ export const HomeStyle = styled.div` // styled component for homepage
     }
   }
 
+  button.clear-search-button {
+    width: 35px;
+    height: 35px;
+    margin-left: 5px;
+  }
+
   table {
     padding: 20px;
     margin: 20px auto;
+    table-layout: fixed;
     background-color: #000;
     border: 2px solid #00ffff;
     @media only screen and (max-width: 767px) {
@@ -37,8 +44,8 @@ export const HomeStyle = styled.div` // styled component for homepage
   }
 
   button {
-    color: ${(props) => props.theme.primaryColor};
-    background-color: ${(props) => props.theme.secondaryColor};
+    color: #f0f8ff;
+    background-color: #ff0000;
   }
 
   .row {
@@ -80,4 +87,5 @@ export const PageControls = styled.div`
   .current-page {
     background-color: #006400;
   }
+
 `;

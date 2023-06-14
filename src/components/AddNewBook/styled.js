@@ -4,7 +4,7 @@ export const AddNewBookStyle = styled.div`  // styled component for add new book
   flex-basis: 50%;
 
   h2 {
-    color: ${(props) => props.theme.headingColor};
+    color: #faebd7;
   }
 
   form {
@@ -81,7 +81,7 @@ export const AddNewBookStyle = styled.div`  // styled component for add new book
   }
 
   label {
-    color: ${(props) => props.theme.labelColor};
+    color: #ffffff;
   }
 
   option {

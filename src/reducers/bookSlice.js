@@ -142,10 +142,18 @@ export const bookSlice = createSlice({
     },
     addAuthor: (state, action) => {
       // add new author
-      const author = action.payload;
-      if (!state.authors.includes(author)) {
-        state.authors.push(author);
+      const author = action.payload.trim();
+
+      const existingAuthor = state.authors.some(
+        (existingAuthor) => existingAuthor.trim().toLowerCase() === author.toLowerCase()
+      );
+
+      console.log(existingAuthor)
+
+      if (existingAuthor) { 
+        return 
       }
+        state.authors.push(author);
     },
     editBookInfo: (state, action) => {
       // edit book

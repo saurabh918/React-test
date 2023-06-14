@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { HomeStyle, PageControls } from "./styled";
 import WrapperComponent from "../../components/wrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { ThemeProvider } from "styled-components";
 import BookContent from "../../components/bookContents";
 import BookDataHeading from "../../components/bookDataTitles";
-import { setPage } from "../../features/bookSlice";
+import { setPage } from "../../reducers/bookSlice";
 import AddNewBook from "../../components/AddNewBook";
 const Home = () => {
   const dispatch = useDispatch();
@@ -23,11 +22,6 @@ const Home = () => {
   const [sortColumn, setSortColumn] = useState(null); // column which is referred for sorting
   const [sortOrder, setSortOrder] = useState("asc"); // decide ascending or descending
   const [editBook, setEditBook] = useState(null); // targeted book to edit
-
-  const theme = {
-    primaryColor: "#f0f8ff",
-    secondaryColor: "#ff0000",
-  };
 
   const handleSort = (column) => {
     // apply sorting when clicking on specific column
@@ -85,6 +79,10 @@ const Home = () => {
     }
   };
 
+  const handleClearSearch = () => {
+    setSearchKeyword('');
+  };
+
   const handleNextPage = () => {
     // when click on next button
     if (currentPage < totalPages) {
@@ -140,7 +138,6 @@ const Home = () => {
   }, [totalBooks, currentPage, dispatch, itemsPerPage]);
 
   return (
-    <ThemeProvider theme={theme}>
       <HomeStyle>
         <WrapperComponent>
           <h1>Books Management System</h1>
@@ -151,8 +148,13 @@ const Home = () => {
                 className="search-field"
                 value={searchKeyword}
                 onChange={handleSearch}
-                placeholder="search here..."
+                placeholder="search with keyword"
               ></input>
+              {searchKeyword && (
+                <button className="clear-search-button" onClick={handleClearSearch}>
+                  &#x2715;
+                </button>
+                )}
               <table>
                 <BookDataHeading
                   handleSort={handleSort}
@@ -221,7 +223,6 @@ const Home = () => {
           </div>
         </WrapperComponent>
       </HomeStyle>
-    </ThemeProvider>
   );
 };
 
