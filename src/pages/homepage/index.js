@@ -40,33 +40,36 @@ const Home = () => {
     return "";
   };
 
+  // logic to sort the data
   const sortedData = [...totalBooks].sort((a, b) => {
-    // logic to sort data when user click on any column title
-    if (sortColumn === "id") {
-      return sortOrder === "asc" ? a.id - b.id : b.id - a.id;
-    } else if (sortColumn === "title") {
-      return sortOrder === "asc"
-        ? a.title.localeCompare(b.title)
-        : b.title.localeCompare(a.title);
-    } else if (sortColumn === "category") {
-      return sortOrder === "asc"
-        ? a.category.localeCompare(b.category)
-        : b.category.localeCompare(a.category);
-    } else if (sortColumn === "publish_date") {
-      const dateA = new Date(a.publish_date).getTime();
-      const dateB = new Date(b.publish_date).getTime();
+    switch (sortColumn) {
+      case "id":
+        return sortOrder === "asc" ? a.id - b.id : b.id - a.id;
+      case "title":
+        return sortOrder === "asc"
+          ? a.title.localeCompare(b.title)
+          : b.title.localeCompare(a.title);
+      case "category":
+        return sortOrder === "asc"
+          ? a.category.localeCompare(b.category)
+          : b.category.localeCompare(a.category);
+      case "publish_date":
+        const dateA = new Date(a.publish_date).getTime();
+        const dateB = new Date(b.publish_date).getTime();
   
-      if (dateA < dateB) {
-        return sortOrder === "asc" ? -1 : 1;
-      } else if (dateA > dateB) {
-        return sortOrder === "asc" ? 1 : -1;
-      }
-    } else if (sortColumn === "author") {
-      return sortOrder === "asc"
-        ? a.category.localeCompare(b.author)
-        : b.author.localeCompare(a.author);
+        if (dateA < dateB) {
+          return sortOrder === "asc" ? -1 : 1;
+        } else if (dateA > dateB) {
+          return sortOrder === "asc" ? 1 : -1;
+        }
+        break;
+      case "author":
+        return sortOrder === "asc"
+          ? a.category.localeCompare(b.author)
+          : b.author.localeCompare(a.author);
+      default:
+        return 0;
     }
-    return 0;
   });
 
   const pageData = sortedData.slice(startIndex, endIndex);
@@ -165,16 +168,8 @@ const Home = () => {
                   getSortOrder={getSortOrder}
                 />
                 <tbody>
-                  {searchKeyword === ""
-                    ? pageData.map((book, i) => (
-                        <BookContent
-                          book={book}
-                          key={i}
-                          handleEdit={handleEdit}
-                          handleDelete={handleDelete}
-                        />
-                      ))
-                    : filteredPageData.map((book, i) => (
+                  {(searchKeyword ? filteredPageData : pageData)
+                    .map((book, i) => (
                         <BookContent
                           book={book}
                           key={i}

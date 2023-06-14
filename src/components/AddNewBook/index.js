@@ -96,14 +96,6 @@ const AddNewBook = ({ editBook, setEditBook }) => {
         setNewCategory(newCategory);
         dispatch(addCategory(newCategory));
       }
-      // categories.map((existingCat) => {
-      //   if(existingCat.trim().toLowerCase() === category.trim().toLowerCase()) {
-      //     setAuthor(existingCat)
-      //     return;
-      //   } 
-      //   setNewCategory(newCategory)
-      //   dispatch(addCategory(newCategory));
-      // })
     }
     setDisplayAddCategory(false);
     document.body.classList.remove("disable-scroll");
@@ -112,13 +104,6 @@ const AddNewBook = ({ editBook, setEditBook }) => {
   };
 
   const handleAuthor = () => {
-    // add new author
-    // if (newAuthor && !(authors.some((existingAuthor) => existingAuthor.trim().toLowerCase() === author.trim().toLowerCase()))) {
-    //   dispatch(addAuthor(newAuthor));
-    // } else {
-    //   setNewAuthor()
-    // }
-
     if(newAuthor) {
       const matchingAuthor = authors.find(existingAuthor =>
         existingAuthor.trim().toLowerCase() === author.trim().toLowerCase()
