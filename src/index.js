@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import GlobalStyle from "./components/globalStyling/styled";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import GlobalStyle from "./themes/globalStyling/styled";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

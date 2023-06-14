@@ -7,7 +7,7 @@ import {
   editBookInfo,
 } from "../../reducers/bookSlice";
 import { AddNewBookStyle } from "./styled";
-import AddNewSection from "../addNewSection";
+import AddNewSection from "../addNewPopup";
 
 const AddNewBook = ({ editBook, setEditBook }) => {
   const categories = useSelector((state) => state.bookSlice.categories); // fetch categories
@@ -156,6 +156,10 @@ const AddNewBook = ({ editBook, setEditBook }) => {
     document.body.classList.remove("disable-scroll");
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
+
   useEffect(() => {
     // to check if the user click to edit the book
     if (editBook) {
@@ -169,7 +173,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
   return (
       <AddNewBookStyle>
         <h2>{editBook ? "Edit your book" : "Add New Book"}</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="title-section">
             <label htmlFor="title">Title: </label>
             <input

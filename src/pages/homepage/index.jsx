@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BookContent from "../../components/bookContents";
 import BookDataHeading from "../../components/bookDataTitles";
 import { deleteBook, setPage } from "../../reducers/bookSlice";
-import AddNewBook from "../../components/AddNewBook";
+import AddNewBook from "../../components/addNewBook";
 const Home = () => {
   const dispatch = useDispatch();
   const totalBooks = useSelector((state) => state.bookSlice.bookData); // all books data
