@@ -1,7 +1,13 @@
+// import from modules
 import React from "react";
-import { HeaderStyle } from "./styled";
+
+// import from components
 import WrapperComponent from "../wrapper";
 import Navbar from "../navbar";
+
+// import styled components
+import { HeaderStyle } from "./header.styled";
+
 const HeaderComponent = () => {
   return (
       <HeaderStyle>

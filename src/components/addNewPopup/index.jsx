@@ -1,5 +1,8 @@
+// import from modules
 import React from "react";
-import { AddSectionStyle } from "./styled";
+
+// import styles
+import { AddSectionStyle } from "./addNewPopup.styled";
 
 const AddNewSection = ({ name, value, handleChange, handle, cancel }) => {
   return (

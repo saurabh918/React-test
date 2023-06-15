@@ -1,6 +1,11 @@
+// import from modules
 import React from "react";
+
+// import component
 import WrapperComponent from "../wrapper";
-import { FooterStyle } from "./styled";
+
+// import styled component
+import { FooterStyle } from "./footer.styled";
 
 const FooterComponent = () => {
   return (

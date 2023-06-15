@@ -7,7 +7,7 @@ const RoutesComponent = () => {
     <>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/book/:slug" element={<BookDetails />} />
+        <Route exact path="/book/:id" element={<BookDetails />} />
       </Routes>
     </>
   );

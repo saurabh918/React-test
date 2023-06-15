@@ -1,16 +1,23 @@
+// import from node modules
 import React, { useEffect, useState } from "react";
-import { HomeStyle, PageControls } from "./styled";
-import WrapperComponent from "../../components/wrapper";
 import { useDispatch, useSelector } from "react-redux";
+import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+
+// import components
+import WrapperComponent from "../../components/wrapper";
 import BookContent from "../../components/bookContents";
 import BookDataHeading from "../../components/bookDataTitles";
+import AddNewBook from "../../components/AddNewBook";
+
+// import from reducers
 import { deleteBook, setPage } from "../../reducers/bookSlice";
-import AddNewBook from "../../components/addNewBook";
+
+// import styled components
+import { HomeStyle, PageControls } from "./homepage.styled";
+
 const Home = () => {
   const dispatch = useDispatch();
-  const totalBooks = useSelector((state) => state.bookSlice.bookData); // all books data
-  const currentPage = useSelector((state) => state.bookSlice.currentPage); // current page number
-  const itemsPerPage = useSelector((state) => state.bookSlice.itemsPerPage); // items per page
+  const {bookData: totalBooks,currentPage,itemsPerPage} = useSelector((state) => state.bookSlice); // all books data
   const totalPages = Math.ceil(totalBooks.length / itemsPerPage); // calculate total pages
 
   //to select books to show on current page
@@ -74,22 +81,16 @@ const Home = () => {
 
   const pageData = sortedData.slice(startIndex, endIndex);
 
-  const handlePreviousPage = () => {
-    // when click on previous button
-    if (currentPage > 1) {
+  const handleCurrentPage = (direction) => {
+    if (direction === 'next' && currentPage < totalPages) {
+      dispatch(setPage(currentPage + 1));
+    } else if (direction === 'prev' && currentPage > 1) {
       dispatch(setPage(currentPage - 1));
     }
   };
 
   const handleClearSearch = () => {
     setSearchKeyword('');
-  };
-
-  const handleNextPage = () => {
-    // when click on next button
-    if (currentPage < totalPages) {
-      dispatch(setPage(currentPage + 1));
-    }
   };
 
   const handlePageClick = (page) => {
@@ -182,13 +183,13 @@ const Home = () => {
               <PageControls className="page-controls">
                 <button
                   type="button"
-                  onClick={handlePreviousPage}
+                  onClick={() => handleCurrentPage('prev')}
                   disabled={
                     currentPage === 1 || filteredPages === 0 || totalPages === 0
                   }
                   className="slide-btn"
                 >
-                  Previous
+                  <FaChevronLeft />
                 </button>
                 {Array.from(
                   { length: filteredData ? filteredPages : totalPages },
@@ -206,7 +207,7 @@ const Home = () => {
                 )}
                 <button
                   type="button"
-                  onClick={handleNextPage}
+                  onClick={() => handleCurrentPage('next')}
                   disabled={
                     filteredPages
                       ? currentPage === filteredPages
@@ -216,7 +217,7 @@ const Home = () => {
                   }
                   className="slide-btn"
                 >
-                  Next
+                  <FaChevronRight />
                 </button>
               </PageControls>
             </div>

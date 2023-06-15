@@ -1,5 +1,8 @@
+// import from modules
 import React from "react";
-import { WrapperStyle } from "./styled";
+
+// import styled components
+import { WrapperStyle } from "./wrapper.styled";
 
 const WrapperComponent = ({ children }) => {
   return <WrapperStyle className="wrapper">{children}</WrapperStyle>;

@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const AddNewBookStyle = styled.div`  // styled component for add new book section
-  flex-basis: 50%;
+  flex-basis: 30%;
 
   h2 {
     color: #faebd7;

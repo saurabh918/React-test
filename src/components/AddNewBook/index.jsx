@@ -1,28 +1,37 @@
+// import modules
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+// import components
+import AddNewSection from "../addNewPopup";
+
+//import from reducers
 import {
   addAuthor,
   addBook,
   addCategory,
   editBookInfo,
 } from "../../reducers/bookSlice";
-import { AddNewBookStyle } from "./styled";
-import AddNewSection from "../addNewPopup";
+
+// import styled components
+import { AddNewBookStyle } from "./Addnewbook.styled";
+
 
 const AddNewBook = ({ editBook, setEditBook }) => {
-  const categories = useSelector((state) => state.bookSlice.categories); // fetch categories
-  const authors = useSelector((state) => state.bookSlice.authors); // fetch authors
-  const totalBooks = useSelector((state) => state.bookSlice.bookData); // all books data
+  const {categories,authors, bookData:totalBooks} = useSelector((state) => state.bookSlice); // fetch categories
+
+  // use states
   const [displayAddCategory, setDisplayAddCategory] = useState(false); // to show or hide add category popup
   const [displayAddAuthor, setDisplayAddAuthor] = useState(false); // to show or hide add author popup
   const [newCategory, setNewCategory] = useState(""); // to get new category name
   const [newAuthor, setNewAuthor] = useState(""); // to get new author name
-  const dispatch = useDispatch();
-
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [publishedDate, setPublishedDate] = useState("");
   const [author, setAuthor] = useState("");
+
+  
+  const dispatch = useDispatch();
 
   const handleAddBook = (e) => {
     // add new book

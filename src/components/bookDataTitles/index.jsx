@@ -1,13 +1,11 @@
+// import from node modules
 import React from "react";
-import { BookTitleStyling } from "./styled";
-import { ThemeProvider } from "styled-components";
+
+// import styled components
+import { BookTitleStyling } from "./bookDataTitles.styled";
 
 const BookDataHeading = ({ handleSort, getSortOrder }) => {
-  const theme = {
-    thColor: "#f5deb3",
-  };
   return (
-    <ThemeProvider theme={theme}>
       <BookTitleStyling>
         <tr>
           <th title="sort by ID" onClick={() => handleSort("id")}>
@@ -29,10 +27,9 @@ const BookDataHeading = ({ handleSort, getSortOrder }) => {
             Author {getSortOrder("author")}
           </th>
           <th>Edit</th>
-          <th>Delete</th>
+          <th>Del</th>
         </tr>
       </BookTitleStyling>
-    </ThemeProvider>
   );
 };
 

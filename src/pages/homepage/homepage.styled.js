@@ -33,6 +33,7 @@ export const HomeStyle = styled.div` // styled component for homepage
   }
 
   table {
+    width: 100%;
     padding: 20px;
     margin: 20px auto;
     table-layout: fixed;
@@ -57,16 +58,15 @@ export const HomeStyle = styled.div` // styled component for homepage
   }
 
   .display-books {
-    flex-basis: 50%;
+    flex-basis: 70%;
   }
 `;
 
 export const PageControls = styled.div`
   .slide-btn {
-    background-color: #006400;
+    background-color: #000;
     &:disabled {
-      background-color: #000000;
-      color: #fff;
+      display: none;
     }
   }
 

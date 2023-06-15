@@ -6,6 +6,9 @@ export const BookTitleStyling = styled.thead` // styled component for books tabl
   th {
     width: 14%;
     cursor: pointer;
+    &:first-child,&:last-child,&:nth-last-child(2) {
+      width: 5%;
+    }
     @media only screen and (max-width: 767px) {
       font-size: 12px;
       white-space: nowrap;

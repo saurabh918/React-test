@@ -1,6 +1,10 @@
+// import from modules
 import React from "react";
-import { NavbarStyle } from "./styled";
 import { Link } from "react-router-dom";
+
+// import styled components
+import { NavbarStyle } from "./navbar.styled";
+
 
 const Navbar = () => {
   return (
