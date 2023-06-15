@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 // import components
-import WrapperComponent from "../../components/wrapper";
 import BookContent from "../../components/bookContents";
 import BookDataHeading from "../../components/bookDataTitles";
 import AddNewBook from "../../components/AddNewBook";
@@ -20,14 +19,15 @@ const Home = () => {
   const {bookData: totalBooks,currentPage,itemsPerPage} = useSelector((state) => state.bookSlice); // all books data
   const totalPages = Math.ceil(totalBooks.length / itemsPerPage); // calculate total pages
 
+  // defining states
+  const [searchKeyword, setSearchKeyword] = useState(""); 
+  const [sortColumn, setSortColumn] = useState(null); 
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [editBook, setEditBook] = useState(null); 
+
   //to select books to show on current page
   const startIndex = (currentPage - 1) * itemsPerPage; 
   const endIndex = startIndex + itemsPerPage;
-
-  const [searchKeyword, setSearchKeyword] = useState(""); // search value
-  const [sortColumn, setSortColumn] = useState(null); // column which is referred for sorting
-  const [sortOrder, setSortOrder] = useState("asc"); // decide ascending or descending
-  const [editBook, setEditBook] = useState(null); // targeted book to edit
 
   const handleSort = (column) => {
     // apply sorting when clicking on specific column
@@ -147,7 +147,6 @@ const Home = () => {
 
   return (
       <HomeStyle>
-        <WrapperComponent>
           <h1>Books Management System</h1>
           <div className="row">
             <div className="display-books">
@@ -223,7 +222,6 @@ const Home = () => {
             </div>
             <AddNewBook editBook={editBook} setEditBook={setEditBook} />
           </div>
-        </WrapperComponent>
       </HomeStyle>
   );
 };
