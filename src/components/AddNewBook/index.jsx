@@ -103,7 +103,11 @@ const AddNewBook = ({ editBook, setEditBook }) => {
         setAuthor(matchingCategory);
       } else {
         setNewCategory(newCategory);
-        dispatch(addCategory(newCategory));
+        let addCategory = {
+          id: categories.length > 0 ? totalBooks[totalBooks.length - 1].id + 1 : 1,
+          name: newCategory
+        }
+        dispatch(addCategory(addCategory));
       }
     }
     setDisplayAddCategory(false);
@@ -214,8 +218,8 @@ const AddNewBook = ({ editBook, setEditBook }) => {
                 {category ? category : "Select Category"}
               </option>
               {categories.map((cat, i) => (
-                <option key={i} value={cat}>
-                  {cat}
+                <option key={i} value={cat.name}>
+                  {cat.name}
                 </option>
               ))}
             </select>
