@@ -6,7 +6,7 @@ import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 // import components
 import BookContent from "../../components/bookContents";
 import BookDataHeading from "../../components/bookDataTitles";
-import AddNewBook from "../../components/addNewBook";
+import AddNewBook from "../../components/addBook";
 
 // import from reducers
 import { deleteBook, setPage } from "../../reducers/bookSlice";
