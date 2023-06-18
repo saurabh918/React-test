@@ -9,9 +9,11 @@ import { ThemeProvider } from "styled-components";
 import App from "./App";
 
 // import store
-import { store } from "./store";
+import store from "./store";
 
-// import global style
+// import style
+import 'reset.css'
+import './index.css';
 import GlobalStyle from "./themes/globalStyling/styled";
 
 // import theme

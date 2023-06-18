@@ -1,20 +1,16 @@
 import { styled } from "styled-components";
 
-export const BookContentStyling = styled.tr` // styled component for books list
+export const StyledBookContent = styled.tr` // styled component for books list
 
-
-  &:hover {
-    border: 2px solid #fff;
-  }
 
   td {
-    padding: 10px 20px;
+    padding: 15px 20px;
     width: 14%;
     color: #fffaf0;
     &:last-child,&:last-child,&:nth-last-child(2) {
       cursor: pointer;
       &:hover {
-        color: #00ffff;
+        color: ${props => props.theme.primaryColor};
       }
     }
 
@@ -28,14 +24,14 @@ export const BookContentStyling = styled.tr` // styled component for books list
     }
 
     svg.del-btn {
-      color: #ffff00;
+      color: #ffffff;
       &:hover {
-        color: #ff0000;
+        color: ${props => props.theme.primaryButtonColor};
       }
     }
 
     a {
-      color: #fff;
+      color: #ffff00;
       text-decoration: none;
     }
   }

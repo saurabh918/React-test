@@ -7,27 +7,30 @@ const GlobalStyle = createGlobalStyle` // styled component for global styling
     flex-direction: column; 
     margin: 0;
     padding: 0;
-    background-color: ${(props) => props.theme.backgroundColor}
+    background: url(/assets/images/background.jpg) no-repeat center;
+    background-size: cover;
   }
 
-  body {
-    margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-    &.disable-scroll {
-    overflow: hidden;
-    pointer-events: none;
-    }
+  #root {
+    flex: 1;
   }
 
-  code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+  footer {
+    margin-top: auto;
+  }
 
+  h2 {
+    font-size: 24px;
+  }
+
+  h3,h3 span {
+    font-size: 23px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 23px;
+  }
 `;
 
 export default GlobalStyle;

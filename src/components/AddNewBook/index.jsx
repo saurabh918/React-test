@@ -14,7 +14,9 @@ import {
 } from "../../reducers/bookSlice";
 
 // import styled components
-import { AddNewBookStyle } from "./Addnewbook.styled";
+import { StyledAddNewBook } from "./addnewbook.styled";
+import Button from "../../elements/button";
+import Select from "../../elements/select";
 
 
 const AddNewBook = ({ editBook, setEditBook }) => {
@@ -35,10 +37,9 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
   const handleAddBook = (e) => {
     // add new book
-    e.preventDefault();
-    if (!title || !category || !publishedDate || !author) {
-      alert("Please make sure you have filled all data");
-      return;
+
+    if(title && category && publishedDate && author) {
+      e.preventDefault()
     }
 
     if (editBook) {
@@ -89,49 +90,42 @@ const AddNewBook = ({ editBook, setEditBook }) => {
 
   const handleAuthorChange = (e) => {
     // set new author value
-      setNewAuthor(e.target.value);
+    setNewAuthor(e.target.value);
   };
 
   const handleCategory = () => {
-    // add new category
-    if (newCategory) {
-      const matchingCategory = categories.find(existingCat =>
-        existingCat.trim().toLowerCase() === category.trim().toLowerCase()
-      );
-      
-      if (matchingCategory) {
-        setAuthor(matchingCategory);
-      } else {
-        setNewCategory(newCategory);
-        let addCategory = {
-          id: categories.length > 0 ? totalBooks[totalBooks.length - 1].id + 1 : 1,
-          name: newCategory
-        }
-        dispatch(addCategory(addCategory));
-      }
+    // set new category
+    const existingCategory = categories.find(
+      (category) => category.name.trim().toLowerCase() === newCategory.trim().toLowerCase()
+    );
+  
+    if (existingCategory) {
+      setCategory(existingCategory.name);
+    } else {
+      dispatch(addCategory(newCategory));
+      setCategory(newCategory);
     }
+  
     setDisplayAddCategory(false);
     document.body.classList.remove("disable-scroll");
-    setCategory(newCategory);
     setNewCategory("");
   };
 
   const handleAuthor = () => {
-    if(newAuthor) {
-      const matchingAuthor = authors.find(existingAuthor =>
-        existingAuthor.trim().toLowerCase() === author.trim().toLowerCase()
-      );
-      
-      if (matchingAuthor) {
-        setAuthor(matchingAuthor);
-      } else {
-        setNewAuthor(newAuthor);
-        dispatch(addAuthor(newAuthor));
-      }
+    // set new author
+    const existingAuthor = authors.find(
+      (author) => author.name.trim().toLowerCase() === newAuthor.trim().toLowerCase()
+    );
+  
+    if (existingAuthor) {
+      setAuthor(existingAuthor.name);
+    } else {
+      dispatch(addAuthor(newAuthor));
+      setAuthor(newAuthor);
     }
+  
     setDisplayAddAuthor(false);
     document.body.classList.remove("disable-scroll");
-    setAuthor(newAuthor);
     setNewAuthor("");
   };
 
@@ -169,10 +163,6 @@ const AddNewBook = ({ editBook, setEditBook }) => {
     document.body.classList.remove("disable-scroll");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-  }
-
   useEffect(() => {
     // to check if the user click to edit the book
     if (editBook) {
@@ -180,13 +170,18 @@ const AddNewBook = ({ editBook, setEditBook }) => {
       setCategory(editBook.category);
       setPublishedDate(editBook.publish_date);
       setAuthor(editBook.author);
+    } else {
+      setTitle("");
+      setCategory("");
+      setPublishedDate("");
+      setAuthor("");
     }
   }, [editBook]);
 
   return (
-      <AddNewBookStyle>
+      <StyledAddNewBook>
         <h2>{editBook ? "Edit your book" : "Add New Book"}</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleAddBook}>
           <div className="title-section">
             <label htmlFor="title">Title: </label>
             <input
@@ -196,6 +191,7 @@ const AddNewBook = ({ editBook, setEditBook }) => {
               value={title}
               placeholder="Book Title..."
               onChange={(e) => setTitle(e.target.value)}
+              required
             />
           </div>
           <div className="date-section">
@@ -205,89 +201,51 @@ const AddNewBook = ({ editBook, setEditBook }) => {
               id="publishedDate"
               value={publishedDate}
               onChange={(e) => setPublishedDate(e.target.value)}
+              required
             />
           </div>
           <div className="category-section">
             <label htmlFor="category">Category: </label>
-            <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">
-                {category ? category : "Select Category"}
-              </option>
-              {categories.map((cat, i) => (
-                <option key={i} value={cat.name}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
-            <button type="button" onClick={showCategory}>
-              Add New
-            </button>
+            <Select id="category" value={category} onChange={(e) => {setCategory(e.target.value)}} data={categories} label="Select Category" />
+            <Button type="button" label="Add New" className="add-new-btn" onClick={showCategory} />
+              
             {displayAddCategory && (
               <AddNewSection
                 name="Category"
                 value={newCategory}
                 handleChange={handleCategoryChange}
-                handle={handleCategory}
+                handleDispatch={handleCategory}
                 cancel={CancelAddCategory}
               />
             )}
           </div>
           <div className="author-section">
             <label htmlFor="author">Author: </label>
-            <select
-              id="author"
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-            >
-              <option value="">{author ? author : "Select Author"}</option>
-              {authors.map((author, i) => (
-                <option key={i} value={author}>
-                  {author}
-                </option>
-              ))}
-            </select>
-
-            <button type="button" onClick={showAuthor}>
-              Add New
-            </button>
+            <Select id="author" value={author} onChange={(e) => {setAuthor(e.target.value)}} data={authors} label="Select Author" />
+            <Button type="button" label="Add New" className="add-new-btn" onClick={showAuthor} />
             {displayAddAuthor && (
               <AddNewSection
                 name="Author"
                 value={newAuthor}
                 handleChange={handleAuthorChange}
-                handle={handleAuthor}
+                handleDispatch={handleAuthor}
                 cancel={CancelAddAuthor}
               />
             )}
           </div>
           <div className="btn-section">
-            <button
-              type="button"
-              onClick={(e) => handleAddBook(e)}
-              className="add-btn"
-            >
-              {editBook ? "Save" : "Add"}
-            </button>
+          <Button type="submit" label={editBook ? "Save" : "Add"} className="add-btn" />
 
             {editBook && (
               <>
-                <button
-                  onClick={(e) => handleCancelEDit(e)}
-                  className="cancel-btn"
-                >
-                  Cancel
-                </button>
+              <Button type="button" label="cancel" className="cancel-btn" onClick={handleCancelEDit} />
               </>
             )}
           </div>
         </form>
         <p>Number of Books: {totalBooks.length}</p>
         <p>Number of Authors: {authors.length}</p>
-      </AddNewBookStyle>
+      </StyledAddNewBook>
   );
 };
 

@@ -5,15 +5,15 @@ import React from "react";
 import WrapperComponent from "../wrapper";
 
 // import styled component
-import { FooterStyle } from "./footer.styled";
+import { StyledFooter } from "./footer.styled";
 
 const FooterComponent = () => {
   return (
-      <FooterStyle>
+      <StyledFooter>
         <WrapperComponent>
           <span>&copy;Copyright 2023. All rights reserved &reg;</span>
         </WrapperComponent>
-      </FooterStyle>
+      </StyledFooter>
   );
 };
 

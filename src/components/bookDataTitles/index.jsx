@@ -2,11 +2,11 @@
 import React from "react";
 
 // import styled components
-import { BookTitleStyling } from "./bookDataTitles.styled";
+import { StyledBookTitle } from "./bookDataTitles.styled";
 
 const BookDataHeading = ({ handleSort, getSortOrder }) => {
   return (
-      <BookTitleStyling>
+      <StyledBookTitle>
         <tr>
           <th title="sort by ID" onClick={() => handleSort("id")}>
             ID {getSortOrder("id")}
@@ -29,7 +29,7 @@ const BookDataHeading = ({ handleSort, getSortOrder }) => {
           <th>Edit</th>
           <th>Del</th>
         </tr>
-      </BookTitleStyling>
+      </StyledBookTitle>
   );
 };
 

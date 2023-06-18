@@ -6,15 +6,15 @@ import WrapperComponent from "../wrapper";
 import Navbar from "../navbar";
 
 // import styled components
-import { HeaderStyle } from "./header.styled";
+import { StyledHeader } from "./header.styled";
 
 const HeaderComponent = () => {
   return (
-      <HeaderStyle>
+      <StyledHeader>
         <WrapperComponent>
           <Navbar />
         </WrapperComponent>
-      </HeaderStyle>
+      </StyledHeader>
   );
 };
 

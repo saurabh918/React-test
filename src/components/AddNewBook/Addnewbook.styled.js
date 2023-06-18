@@ -1,16 +1,27 @@
 import { styled } from "styled-components";
 
-export const AddNewBookStyle = styled.div`  // styled component for add new book section
+export const StyledAddNewBook = styled.div`  // styled component for add new book section
   flex-basis: 30%;
+  background-color: ${(props) => props.theme.sectionBackgroundColor};
+
+  @media only screen and (max-width: ${props => props.theme.desktop}) {
+    padding: 20px 0;
+  }
 
   h2 {
     color: #faebd7;
   }
 
   form {
+    margin-top: 20px;
     display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
     row-gap: 40px;
+  }
+
+  input,select {
+    margin-top: 10px;
   }
 
   input,
@@ -29,30 +40,30 @@ export const AddNewBookStyle = styled.div`  // styled component for add new book
     }
 
     button {
-      border: 1px solid #ffff00;
+      border: ${props => props.theme.formBorderColor};
       border-radius: 5px;
-      background-color: #00008b;
+      background-color: ${props => props.theme.secondaryButtonColor};
       cursor: pointer;
       &:hover {
-        background-color: #add8e6;
-        color: #00008b;
-        border: 1px solid #00008b;
+        background-color: ${props => props.theme.buttonHoverColor};
+        color: ${props => props.theme.secondaryButtonColor};
+        border: 1px solid ${props => props.theme.secondaryButtonColor};
       }
 
       &.add-btn {
-        padding: 5px 10px;
+        padding: ${props => props.theme.buttonPadding};
         border: 1px solid #ffffff;
-        background-color: #006400;
+        background-color: ${props => props.theme.currentPageColor};
         &:hover {
-          background-color: #7fffd4;
+          background-color: ${props => props.theme.addBtnColor};
         }
       }
 
       &.delete-btn {
-        background-color: #ff0000;
-        border: 1px solid #00008b;
+        background-color: ${props => props.theme.primaryButtonColor};
+        border: 1px solid ${props => props.theme.secondaryButtonColor};
         &:hover {
-          background-color: #a52a2a;
+          background-color: ${props => props.theme.buttonHoverColor};
           color: #ffffff;
         }
       }
@@ -61,8 +72,13 @@ export const AddNewBookStyle = styled.div`  // styled component for add new book
         background-color: #000000;
         border: 1px solid #ffffff;
         &:hover {
-          background-color: #faebd7;
+          background-color: ${props => props.theme.addNewSectionBackgroundColor};
         }
+      }
+
+      &.add-new-btn {
+        display: block;
+        margin: auto;
       }
     }
     @media only screen and (max-width: 1476px) {
@@ -86,7 +102,7 @@ export const AddNewBookStyle = styled.div`  // styled component for add new book
 
   option {
     &:first-child {  // to show the selected option
-      background-color: #008000;
+      background-color: ${props => props.theme.selectedOptionBackgroundColor};
       color: #ffffff;
     }
   }

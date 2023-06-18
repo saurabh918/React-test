@@ -2,25 +2,28 @@
 import React from "react";
 
 // import styles
-import { AddSectionStyle } from "./addNewPopup.styled";
+import { StyledPopup } from "./addNewPopup.styled";
+import Button from "../../elements/button";
 
-const AddNewSection = ({ name, value, handleChange, handle, cancel }) => {
+const AddNewSection = ({ name, value, handleChange, handleDispatch, cancel }) => {
+  const handleKeyPress = (e) => {
+    if(e.key === "Enter") {
+      handleDispatch()
+    }
+  }
   return (
-      <AddSectionStyle className="fixed-element">
+      <StyledPopup className="fixed-element">
         <h3>Add New {name}</h3>
         <input
           type="text"
           value={value}
           maxLength={12}
           onChange={(e) => handleChange(e)}
+          onKeyDown={(e) => handleKeyPress(e)}
         />
-        <button type="button" onClick={handle}>
-          Add
-        </button>
-        <button type="button" onClick={cancel}>
-          Cancel
-        </button>
-      </AddSectionStyle>
+        <Button type="button" label="Add" onClick={handleDispatch} />
+        <Button type="button" label="Cancel" onClick={cancel} />
+      </StyledPopup>
   );
 };
 

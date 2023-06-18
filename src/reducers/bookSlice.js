@@ -5,14 +5,8 @@ const initialState = {
   bookData: books,
   currentPage: 1, // current page number
   itemsPerPage: 5, // books to show on single page
-  categories: ["Fiction", "Non-Fiction", "Mystery", "Science", "Biography"], // initially set categories
-  authors: [
-    "John Doe",
-    "Jane Smith",
-    "Mark Johnson",
-    "Emily Davis",
-    "Michael Wilson",
-  ], // initially set authors
+  categories: categories,
+  authors: authors
 };
 
 export const bookSlice = createSlice({
@@ -21,52 +15,76 @@ export const bookSlice = createSlice({
   reducers: {
     setPage: (state, action) => {
       // current page number
-      state.currentPage = action.payload;
+      return {
+        ...state,
+        currentPage: action.payload
+      }
     },
+    
     addBook: (state, action) => {
       // add new book
-      state.bookData.push(action.payload);
+      return {
+        ...state,
+        bookData: [...state.bookData,action.payload]
+      }
     },
+
     addCategory: (state, action) => {
       // add new category
-      const category = action.payload;
-      if (!state.categories.includes(category)) {
-        state.categories.push(category);
+      if (action.payload) {
+        const categoryValue =
+        {
+          id: state.categories.length > 0 ? state.categories[state.categories.length - 1].id + 1 : 1,
+          name: action.payload
+        }
+        const newCategories = {
+          ...state,
+          categories: [...state.categories, categoryValue]
+        }
+        return newCategories
       }
+      return state
     },
+
     addAuthor: (state, action) => {
       // add new author
-      const author = action.payload.name.trim();
-
-      const existingAuthor = state.authors.some(
-        (existingAuthor) => existingAuthor.trim().toLowerCase() === author.toLowerCase()
-      );
-
-      console.log(existingAuthor)
-
-      if (existingAuthor) { 
-        return 
+      if (action.payload) {
+        const authorValue =
+        {
+          id: state.authors.length > 0 ? state.authors[state.authors.length - 1].id + 1 : 1,
+          name: action.payload
+        }
+        const newAuthors = {
+          ...state,
+          authors: [...state.authors, authorValue]
+        }
+        return newAuthors
       }
-      
-      const newAuthors = {
-        ...state,
-        authors: [...authors, action.payload]
-      }
-
-      return newAuthors
+      return state
     },
+
     editBookInfo: (state, action) => {
       // edit book
-      const bookToEdit = state.bookData.find(
-        (book) => book.id === action.payload.id
-      );
-      if (bookToEdit) {
-        bookToEdit.title = action.payload.title;
-        bookToEdit.category = action.payload.category;
-        bookToEdit.publish_date = action.payload.publish_date;
-        bookToEdit.author = action.payload.author;
+      const data = action.payload
+      const updatedBookData = state.bookData.map((book) => {
+        if(book.id === data.id) {
+          return {
+            ...book,
+            title: data.title,
+            category: data.category,
+            publish_date: data.publish_date,
+            author: data.author
+          }
+        }
+        return book
+      })
+
+      return {
+        ...state,
+        bookData: updatedBookData
       }
     },
+
     deleteBook: (state, action) => {
       // delete book
       const bookToEdit = state.bookData.find(
@@ -76,7 +94,10 @@ export const bookSlice = createSlice({
         const newBookData = state.bookData.filter(
           (book) => book.id !== action.payload
         );
-        state.bookData = newBookData;
+        return {
+          ...state,
+          bookData: newBookData
+        }
       }
     },
   },

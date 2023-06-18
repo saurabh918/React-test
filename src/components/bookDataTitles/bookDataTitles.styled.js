@@ -1,10 +1,12 @@
 import { styled } from "styled-components";
 
-export const BookTitleStyling = styled.thead` // styled component for books table column headings
+export const StyledBookTitle = styled.thead` // styled component for books table column headings
   color: #f5deb3;
   
   th {
+    padding: 2%;
     width: 14%;
+    font-size: 16px;
     cursor: pointer;
     &:first-child,&:last-child,&:nth-last-child(2) {
       width: 5%;

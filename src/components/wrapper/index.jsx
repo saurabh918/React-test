@@ -2,10 +2,10 @@
 import React from "react";
 
 // import styled components
-import { WrapperStyle } from "./wrapper.styled";
+import { StyleWrapper } from "./wrapper.styled";
 
 const WrapperComponent = ({ children }) => {
-  return <WrapperStyle className="wrapper">{children}</WrapperStyle>;
+  return <StyleWrapper className="wrapper">{children}</StyleWrapper>;
 };
 
 export default WrapperComponent;

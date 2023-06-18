@@ -1,12 +1,16 @@
 import { styled } from "styled-components";
 
-export const HomeStyle = styled.div` // styled component for homepage
+export const StyledHome = styled.div`
+  // styled component for homepage
   flex-grow: 1;
   text-align: center;
 
   h1 {
+    width: 60%;
+    padding: 15px 0;
+    background-color: ${(props) => props.theme.secondaryBackgroundColor};
     font-size: 50px;
-    color: #f0f8ff;
+    color: ${(props) => props.theme.textColor};
     font-weight: bold;
     @media only screen and (max-width: 1024px) {
       font-size: 40px;
@@ -20,9 +24,9 @@ export const HomeStyle = styled.div` // styled component for homepage
   }
 
   .search-field {
-    padding: 10px 20px;
+    padding: 12px 20px;
     @media only screen and (max-width: 576px) {
-      padding: 5px 10px;
+      padding: ${(props) => props.theme.buttonPadding};
     }
   }
 
@@ -37,16 +41,16 @@ export const HomeStyle = styled.div` // styled component for homepage
     padding: 20px;
     margin: 20px auto;
     table-layout: fixed;
-    background-color: #000;
-    border: 2px solid #00ffff;
+    background-color: ${(props) => props.theme.sectionBackgroundColor};
+    border: 2px solid ${(props) => props.theme.primaryColor};
     @media only screen and (max-width: 767px) {
       padding: 7px;
     }
   }
 
   button {
-    color: #f0f8ff;
-    background-color: #ff0000;
+    color: ${(props) => props.theme.textColor};
+    background-color: ${(props) => props.theme.primaryButtonColor};
   }
 
   .row {
@@ -58,23 +62,35 @@ export const HomeStyle = styled.div` // styled component for homepage
   }
 
   .display-books {
-    flex-basis: 70%;
+    flex-basis: 60%;
+    .filter-options {
+      display: flex;
+      justify-content: space-between;
+      .reset-button {
+        height: 100%;
+        padding: 10px;
+        background-color: ${(props) => props.theme.secondaryButtonColor};
+        &:hover {
+          background-color: ${(props) => props.theme.sectionBackgroundColor};
+        }
+      }
+    }
   }
 `;
 
-export const PageControls = styled.div`
+export const StyledPageControls = styled.div`
   .slide-btn {
-    background-color: #000;
+    background-color: ${(props) => props.theme.secondaryBackgroundColor};
     &:disabled {
       display: none;
     }
   }
 
   button {
-    padding: 5px 10px;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    background-color: #00008b;
+    padding: ${(props) => props.theme.buttonPadding};
+    border: ${(props) => props.theme.borderColor};
+    border-radius: ${(props) => props.theme.buttonBorderRadius};
+    background-color: ${(props) => props.theme.secondaryButtonColor};
     cursor: pointer;
     &:disabled {
       cursor: not-allowed;
@@ -85,7 +101,6 @@ export const PageControls = styled.div`
   }
 
   .current-page {
-    background-color: #006400;
+    background-color: ${(props) => props.theme.currentPageColor};
   }
-
 `;

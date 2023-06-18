@@ -1,32 +1,37 @@
 // import from node modules
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
 // import components
 import BookContent from "../../components/bookContents";
 import BookDataHeading from "../../components/bookDataTitles";
-import AddNewBook from "../../components/AddNewBook";
+import AddNewBook from "../../components/addNewBook";
 
 // import from reducers
 import { deleteBook, setPage } from "../../reducers/bookSlice";
 
 // import styled components
-import { HomeStyle, PageControls } from "./homepage.styled";
+import { StyledHome, StyledPageControls } from "./homepage.styled";
+import Button from "../../elements/button";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const {bookData: totalBooks,currentPage,itemsPerPage} = useSelector((state) => state.bookSlice); // all books data
+  const {
+    bookData: totalBooks,
+    currentPage,
+    itemsPerPage,
+  } = useSelector((state) => state.bookSlice); // all books data
   const totalPages = Math.ceil(totalBooks.length / itemsPerPage); // calculate total pages
 
   // defining states
-  const [searchKeyword, setSearchKeyword] = useState(""); 
-  const [sortColumn, setSortColumn] = useState(null); 
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [editBook, setEditBook] = useState(null); 
+  const [editBook, setEditBook] = useState(null);
 
   //to select books to show on current page
-  const startIndex = (currentPage - 1) * itemsPerPage; 
+  const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
   const handleSort = (column) => {
@@ -37,6 +42,7 @@ const Home = () => {
       setSortColumn(column);
       setSortOrder("asc");
     }
+    dispatch(setPage(1));
   };
 
   const getSortOrder = (column) => {
@@ -63,7 +69,7 @@ const Home = () => {
       case "publish_date":
         const dateA = new Date(a.publish_date).getTime();
         const dateB = new Date(b.publish_date).getTime();
-  
+
         if (dateA < dateB) {
           return sortOrder === "asc" ? -1 : 1;
         } else if (dateA > dateB) {
@@ -79,18 +85,23 @@ const Home = () => {
     }
   });
 
+  const handlerResetSort = () => {
+    setSortColumn(null);
+    setSortOrder(null);
+  };
+
   const pageData = sortedData.slice(startIndex, endIndex);
 
   const handleCurrentPage = (direction) => {
-    if (direction === 'next' && currentPage < totalPages) {
+    if (direction === "next" && currentPage < totalPages) {
       dispatch(setPage(currentPage + 1));
-    } else if (direction === 'prev' && currentPage > 1) {
+    } else if (direction === "prev" && currentPage > 1) {
       dispatch(setPage(currentPage - 1));
     }
   };
 
   const handleClearSearch = () => {
-    setSearchKeyword('');
+    setSearchKeyword("");
   };
 
   const handlePageClick = (page) => {
@@ -114,6 +125,7 @@ const Home = () => {
   const handleDelete = (id) => {
     // delete book from store
     dispatch(deleteBook(id));
+    setEditBook(null);
   };
 
   const filteredData = sortedData.filter((item) => {
@@ -146,83 +158,89 @@ const Home = () => {
   }, [totalBooks, currentPage, dispatch, itemsPerPage]);
 
   return (
-      <HomeStyle>
-          <h1>Books Management System</h1>
-          <div className="row">
-            <div className="display-books">
+    <StyledHome>
+      <h1>Books Management System</h1>
+      <div className="row">
+        <div className="display-books">
+          <div className="filter-options">
+            <button className="reset-button" onClick={handlerResetSort}>
+              reset sort
+            </button>
+            <div className="search-section">
               <input
                 type="text"
                 className="search-field"
                 value={searchKeyword}
                 onChange={handleSearch}
                 placeholder="search with keyword"
-              ></input>
+              />
               {searchKeyword && (
-                <button className="clear-search-button" onClick={handleClearSearch}>
-                  &#x2715;
-                </button>
-                )}
-              <table>
-                <BookDataHeading
-                  handleSort={handleSort}
-                  getSortOrder={getSortOrder}
+                <Button
+                  type="button"
+                  label="&#x2715;"
+                  className="clear-search-button"
+                  onClick={handleClearSearch}
                 />
-                <tbody>
-                  {(searchKeyword ? filteredPageData : pageData)
-                    .map((book, i) => (
-                        <BookContent
-                          book={book}
-                          key={i}
-                          handleEdit={handleEdit}
-                          handleDelete={handleDelete}
-                        />
-                      ))}
-                </tbody>
-              </table>
-              <PageControls className="page-controls">
-                <button
-                  type="button"
-                  onClick={() => handleCurrentPage('prev')}
-                  disabled={
-                    currentPage === 1 || filteredPages === 0 || totalPages === 0
-                  }
-                  className="slide-btn"
-                >
-                  <FaChevronLeft />
-                </button>
-                {Array.from(
-                  { length: filteredData ? filteredPages : totalPages },
-                  (_, i) => (
-                    <button
-                      type="button"
-                      key={i}
-                      onClick={() => handlePageClick(i + 1)}
-                      disabled={currentPage === i + 1}
-                      className={currentPage === i + 1 ? "current-page" : ""}
-                    >
-                      {i + 1}
-                    </button>
-                  )
-                )}
-                <button
-                  type="button"
-                  onClick={() => handleCurrentPage('next')}
-                  disabled={
-                    filteredPages
-                      ? currentPage === filteredPages
-                      : currentPage === totalPages ||
-                        filteredPages === 0 ||
-                        totalPages === 0
-                  }
-                  className="slide-btn"
-                >
-                  <FaChevronRight />
-                </button>
-              </PageControls>
+              )}
             </div>
-            <AddNewBook editBook={editBook} setEditBook={setEditBook} />
           </div>
-      </HomeStyle>
+          <table>
+            <BookDataHeading
+              handleSort={handleSort}
+              getSortOrder={getSortOrder}
+            />
+            <tbody>
+              {(searchKeyword ? filteredPageData : pageData).map((book, i) => (
+                <BookContent
+                  book={book}
+                  key={i}
+                  handleEdit={handleEdit}
+                  handleDelete={handleDelete}
+                />
+              ))}
+            </tbody>
+          </table>
+          <StyledPageControls className="page-controls">
+            <Button
+              type="button"
+              label={<FaChevronLeft />}
+              className="slide-btn"
+              onClick={() => handleCurrentPage("prev")}
+              disabled={
+                currentPage === 1 || filteredPages === 0 || totalPages === 0
+              }
+            />
+            {Array.from(
+              { length: filteredData ? filteredPages : totalPages },
+              (_, i) => (
+                <Button
+                  type="button"
+                  label={i + 1}
+                  className={currentPage === i + 1 ? "current-page" : ""}
+                  onClick={() => handlePageClick(i + 1)}
+                  disabled={currentPage === i + 1}
+                  key={i}
+                />
+              )
+            )}
+            <Button
+              type="button"
+              label={<FaChevronRight />}
+              className="slide-btn"
+              onClick={() => handleCurrentPage("next")}
+              disabled={
+                filteredPages
+                  ? currentPage === filteredPages
+                  : currentPage === totalPages ||
+                    filteredPages === 0 ||
+                    totalPages === 0
+              }
+            />
+          </StyledPageControls>
+        </div>
+        <AddNewBook editBook={editBook} setEditBook={setEditBook} />
+      </div>
+    </StyledHome>
   );
 };
 
