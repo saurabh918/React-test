@@ -9,7 +9,7 @@ export const StyledPopup = styled.div` // styled component for add new author or
   box-shadow: 10px 10px;
   background-color: ${props => props.theme.addNewSectionBackgroundColor};
   pointer-events: auto;
-  @media only screen and (max-width: 400px) {
+  @media only screen and (max-width: ${props => props.theme.mobileSmall}) {
     padding: 2% 6% 8%;
   }
   h3 {

@@ -11,7 +11,7 @@ export const StyledBookTitle = styled.thead` // styled component for books table
     &:first-child,&:last-child,&:nth-last-child(2) {
       width: 5%;
     }
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: ${props => props.theme.mobile}) {
       font-size: 12px;
       white-space: nowrap;
     }

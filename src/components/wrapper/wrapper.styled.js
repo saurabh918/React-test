@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const StyleWrapper = styled.div` // styled component for wrapper
-  max-width: 1400px;
+  max-width: ${props => props.theme.desktop};
   width: 95%;
   margin: 0 auto;
 `;

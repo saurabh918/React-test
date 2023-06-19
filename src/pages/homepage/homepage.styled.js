@@ -8,24 +8,25 @@ export const StyledHome = styled.div`
   h1 {
     width: 60%;
     padding: 15px 0;
-    background-color: ${(props) => props.theme.secondaryBackgroundColor};
+    background-color: ${props => props.theme.sectionBackgroundColor};
+    border-radius: ${props => props.theme.borderRadius};
     font-size: 50px;
     color: ${(props) => props.theme.textColor};
     font-weight: bold;
     @media only screen and (max-width: 1024px) {
       font-size: 40px;
     }
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: ${props => props.theme.mobile}) {
       font-size: 25px;
     }
-    @media only screen and (max-width: 576px) {
+    @media only screen and (max-width: ${props => props.theme.mobileMedium}) {
       font-size: 22px;
     }
   }
 
   .search-field {
     padding: 12px 20px;
-    @media only screen and (max-width: 576px) {
+    @media only screen and (max-width: ${props => props.theme.mobileMedium}) {
       padding: ${(props) => props.theme.buttonPadding};
     }
   }
@@ -41,9 +42,9 @@ export const StyledHome = styled.div`
     padding: 20px;
     margin: 20px auto;
     table-layout: fixed;
+    border-radius: ${props => props.theme.borderRadius};
     background-color: ${(props) => props.theme.sectionBackgroundColor};
-    border: 2px solid ${(props) => props.theme.primaryColor};
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: ${props => props.theme.mobile}) {
       padding: 7px;
     }
   }
@@ -69,6 +70,7 @@ export const StyledHome = styled.div`
       .reset-button {
         height: 100%;
         padding: 10px;
+        border: none;
         background-color: ${(props) => props.theme.secondaryButtonColor};
         &:hover {
           background-color: ${(props) => props.theme.sectionBackgroundColor};
@@ -79,8 +81,10 @@ export const StyledHome = styled.div`
 `;
 
 export const StyledPageControls = styled.div`
+  display: flex;
+  justify-content: center;
   .slide-btn {
-    background-color: ${(props) => props.theme.secondaryBackgroundColor};
+    background-color: ${(props) => props.theme.whiteColor};
     &:disabled {
       display: none;
     }
@@ -89,18 +93,24 @@ export const StyledPageControls = styled.div`
   button {
     padding: ${(props) => props.theme.buttonPadding};
     border: ${(props) => props.theme.borderColor};
-    border-radius: ${(props) => props.theme.buttonBorderRadius};
-    background-color: ${(props) => props.theme.secondaryButtonColor};
+    background-color: ${props => props.theme.whiteColor};
+    color: ${props => props.theme.blackColor};
     cursor: pointer;
     &:disabled {
       cursor: not-allowed;
     }
     &:hover {
-      background-color: #800080;
+      background-color: ${props => props.theme.blackColor};
+      color: ${props => props.theme.whiteColor};
     }
   }
 
   .current-page {
     background-color: ${(props) => props.theme.currentPageColor};
+    color: ${props => props.theme.whiteColor};
+    &:hover {
+      background-color: ${(props) => props.theme.currentPageColor};
+      color: ${props => props.theme.whiteColor};
+    }
   }
 `;

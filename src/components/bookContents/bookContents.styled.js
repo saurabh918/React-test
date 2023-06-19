@@ -18,13 +18,13 @@ export const StyledBookContent = styled.tr` // styled component for books list
       width: 5%;
     }
 
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: ${props => props.theme.mobile}) {
       padding: 10px 0;
       font-size: 10px;
     }
 
     svg.del-btn {
-      color: #ffffff;
+      color: ${props => props.theme.whiteColor};
       &:hover {
         color: ${props => props.theme.primaryButtonColor};
       }

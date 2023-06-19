@@ -1,12 +1,14 @@
 export const theme = {
   // color values
   sectionBackgroundColor: "rgba(0, 0, 0, 0.8)",
+  whiteColor: "#ffffff",
+  blackColor: "#000000",
   secondaryBackgroundColor: "#a52a2a",
   textColor: "#f0f8ff",
   primaryColor: "#00ffff",
   primaryButtonColor: "#ff0000",
   secondaryButtonColor: "#00008b",
-  currentPageColor: "#006400",
+  currentPageColor: "#0952ed",
   borderColor: "1px solid #000000",
   addNewSectionBackgroundColor: '#faebd7',
   formBorderColor: '1px solid #ffff00',
@@ -18,8 +20,11 @@ export const theme = {
 
   ipad: "992px",
   desktop: "1400px",
+  mobile: "767px",
+  mobileSmall: "400px",
+  mobileMedium: "576px",
 
   //additional
   buttonPadding: "5px 10px",
-  buttonBorderRadius: "5px",
+  borderRadius: "5px",
 };

@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 export const StyledAddNewBook = styled.div`  // styled component for add new book section
   flex-basis: 30%;
+  border-radius: ${props => props.theme.borderRadius};
   background-color: ${(props) => props.theme.sectionBackgroundColor};
 
   @media only screen and (max-width: ${props => props.theme.desktop}) {
@@ -52,7 +53,7 @@ export const StyledAddNewBook = styled.div`  // styled component for add new boo
 
       &.add-btn {
         padding: ${props => props.theme.buttonPadding};
-        border: 1px solid #ffffff;
+        border: 1px solid ${props => props.theme.whiteColor};
         background-color: ${props => props.theme.currentPageColor};
         &:hover {
           background-color: ${props => props.theme.addBtnColor};
@@ -64,13 +65,13 @@ export const StyledAddNewBook = styled.div`  // styled component for add new boo
         border: 1px solid ${props => props.theme.secondaryButtonColor};
         &:hover {
           background-color: ${props => props.theme.buttonHoverColor};
-          color: #ffffff;
+          color: ${props => props.theme.whiteColor};
         }
       }
 
       &.cancel-btn {
-        background-color: #000000;
-        border: 1px solid #ffffff;
+        background-color: ${props => props.theme.blackColor};
+        border: 1px solid ${props => props.theme.whiteColor};
         &:hover {
           background-color: ${props => props.theme.addNewSectionBackgroundColor};
         }
@@ -84,7 +85,7 @@ export const StyledAddNewBook = styled.div`  // styled component for add new boo
     @media only screen and (max-width: 1476px) {
       flex-basis: 50%;
     }
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: ${props => props.theme.mobile}) {
       flex-basis: 48%;
     }
     @media only screen and (max-width: 616px) {
@@ -97,17 +98,17 @@ export const StyledAddNewBook = styled.div`  // styled component for add new boo
   }
 
   label {
-    color: #ffffff;
+    color: ${props => props.theme.whiteColor};
   }
 
   option {
     &:first-child {  // to show the selected option
       background-color: ${props => props.theme.selectedOptionBackgroundColor};
-      color: #ffffff;
+      color: ${props => props.theme.whiteColor};
     }
   }
 
   p {
-    color: #ffffff;
+    color: ${props => props.theme.whiteColor};
   }
 `;

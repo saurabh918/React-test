@@ -9,7 +9,7 @@ ul {
     font-size: 25px;
     font-weight: bold;
     background-color: ${props => props.theme.primaryButtonColor};
-    color: #ffffff;
+    color: ${props => props.theme.whiteColor};
     text-decoration: none;
   }
   }
