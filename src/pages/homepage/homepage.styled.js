@@ -71,7 +71,8 @@ export const StyledHome = styled.div`
         height: 100%;
         padding: 10px;
         border: none;
-        background-color: ${(props) => props.theme.secondaryButtonColor};
+        background-color: ${(props) => props.theme.blackColor};
+        color: ${(props) => props.theme.whiteColor};
         &:hover {
           background-color: ${(props) => props.theme.sectionBackgroundColor};
         }

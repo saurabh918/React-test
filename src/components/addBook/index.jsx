@@ -52,10 +52,12 @@ const AddNewBook = ({ editBook, setEditBook }) => {
           author: author,
         })
       );
+      
       setTitle("");
       setCategory("");
       setPublishedDate("");
       setAuthor("");
+      setEditBook(null)
       return;
     }
 

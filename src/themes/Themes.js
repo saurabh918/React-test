@@ -1,6 +1,6 @@
 export const theme = {
   // color values
-  sectionBackgroundColor: "rgba(0, 0, 0, 0.8)",
+  sectionBackgroundColor: "rgba(0, 0, 0, 0.9)",
   whiteColor: "#ffffff",
   blackColor: "#000000",
   secondaryBackgroundColor: "#a52a2a",

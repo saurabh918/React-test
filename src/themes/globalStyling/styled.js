@@ -11,7 +11,12 @@ const GlobalStyle = createGlobalStyle` // styled component for global styling
     background-size: cover;
   }
 
-  #root {
+  main {
+    display: flex; 
+    flex-direction: column; 
+  }
+
+  #root,main {
     flex: 1;
   }
 
