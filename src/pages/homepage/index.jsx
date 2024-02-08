@@ -29,6 +29,7 @@ const Home = () => {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const [editBook, setEditBook] = useState(null);
+  const [resetButton,setResetButton] = useState(false);
 
   //to select books to show on current page
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -36,6 +37,7 @@ const Home = () => {
 
   const handleSort = (column) => {
     // apply sorting when clicking on specific column
+    setResetButton(true)
     if (column === sortColumn) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
@@ -88,6 +90,7 @@ const Home = () => {
   const handlerResetSort = () => {
     setSortColumn(null);
     setSortOrder(null);
+    setResetButton(false)
   };
 
   const pageData = sortedData.slice(startIndex, endIndex);
@@ -163,10 +166,13 @@ const Home = () => {
       <div className="row">
         <div className="display-books">
           <div className="filter-options">
+          {resetButton &&
             <button className="reset-button" onClick={handlerResetSort}>
               reset sort
             </button>
+            }
             <div className="search-section">
+              
               <input
                 type="text"
                 className="search-field"
