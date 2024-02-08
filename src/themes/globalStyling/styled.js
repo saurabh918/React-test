@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle` // styled component for global styling
     flex-direction: column; 
     margin: 0;
     padding: 0;
-    background: url(/assets/images/background.jpg) no-repeat center;
+    background-image: linear-gradient(45deg, black, transparent);
     background-size: cover;
   }
 
