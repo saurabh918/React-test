@@ -80,7 +80,7 @@ const Home = () => {
         break;
       case "author":
         return sortOrder === "asc"
-          ? a.category.localeCompare(b.author)
+          ? a.author.localeCompare(b.author)
           : b.author.localeCompare(a.author);
       default:
         return 0;
