@@ -59,7 +59,12 @@ const Home = () => {
   const sortedData = [...totalBooks].sort((a, b) => {
     switch (sortColumn) {
       case "id":
-        return sortOrder === "asc" ? a.id - b.id : b.id - a.id;
+        if(sortOrder === "asc") {
+          return a.id > b.id ? 1 : -1;
+        } else {
+          return a.id < b.id ? 1 : -1;
+        }
+        
       case "title":
         return sortOrder === "asc"
           ? a.title.localeCompare(b.title)
