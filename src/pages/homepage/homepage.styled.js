@@ -8,7 +8,6 @@ export const StyledHome = styled.div`
   h1 {
     width: 60%;
     padding: 15px 0;
-    background-color: ${props => props.theme.sectionBackgroundColor};
     border-radius: ${props => props.theme.borderRadius};
     font-size: 50px;
     color: ${(props) => props.theme.textColor};
